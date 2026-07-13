@@ -28,7 +28,8 @@ const iconMap: Record<string, typeof Compass> = {
 };
 
 export function Services() {
-  const { lang, setSection } = useSiteStore();
+  const lang = useSiteStore((s) => s.lang);
+  const setSection = useSiteStore((s) => s.setSection);
   const c = content[lang].services;
 
   return (

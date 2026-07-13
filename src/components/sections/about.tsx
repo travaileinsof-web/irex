@@ -9,7 +9,7 @@ import { Reveal, RevealWords } from "@/components/site/reveal";
 const valueIcons = [Award, Leaf, Shield, Heart];
 
 export function About() {
-  const { lang } = useSiteStore();
+    const lang = useSiteStore((s) => s.lang);
   const c = content[lang].about;
 
   return (

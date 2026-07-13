@@ -12,7 +12,7 @@ function formatPrice(price: number, lang: "fr" | "en") {
 }
 
 export function Products() {
-  const { lang } = useSiteStore();
+    const lang = useSiteStore((s) => s.lang);
   const c = content[lang].products;
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
 

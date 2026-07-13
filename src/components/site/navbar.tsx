@@ -28,7 +28,12 @@ function getNavLabels(lang: "fr" | "en") {
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { lang, section, setSection, isMenuOpen, setMenuOpen } = useSiteStore();
+  const lang = useSiteStore((s) => s.lang);
+  const section = useSiteStore((s) => s.section);
+  const isMenuOpen = useSiteStore((s) => s.isMenuOpen);
+  const setLang = useSiteStore((s) => s.setLang);
+  const setSection = useSiteStore((s) => s.setSection);
+  const setMenuOpen = useSiteStore((s) => s.setMenuOpen);
   const c = content[lang];
 
   useEffect(() => {

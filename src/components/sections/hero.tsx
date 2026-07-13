@@ -22,7 +22,8 @@ export function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
-  const { lang, setSection } = useSiteStore();
+  const lang = useSiteStore((s) => s.lang);
+  const setSection = useSiteStore((s) => s.setSection);
   const c = content[lang].hero;
 
   // Particle field state

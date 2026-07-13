@@ -16,7 +16,7 @@ const projectGradients = [
 ];
 
 export function Projects() {
-  const { lang } = useSiteStore();
+    const lang = useSiteStore((s) => s.lang);
   const c = content[lang].projects;
 
   return (
