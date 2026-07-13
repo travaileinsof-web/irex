@@ -5,32 +5,48 @@ import { ArrowUpRight, Phone } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal } from "@/components/site/reveal";
+import { ctaBg } from "@/lib/images";
 
 export function CtaBanner() {
-  const lang = useSiteStore((s) => s.lang);
   const setSection = useSiteStore((s) => s.setSection);
+  const lang = useSiteStore((s) => s.lang);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-obsidian via-coal to-obsidian py-32">
-      {/* Decorative elements */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-3xl" />
+    <section className="relative overflow-hidden py-32">
+      {/* Background image */}
+      <img
+        src={ctaBg}
+        alt="Industrial construction"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-obsidian/95 via-emerald-deep/85 to-obsidian/95" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
 
       {/* Floating hexagons */}
       <motion.div
-        className="absolute left-10 top-10 hexagon h-16 w-16 border border-gold/20"
+        className="absolute left-10 top-10 hexagon h-16 w-16 border border-gold/30"
         animate={{ rotate: 360 }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       />
       <motion.div
-        className="absolute bottom-10 right-10 hexagon h-24 w-24 border border-copper/20"
+        className="absolute bottom-10 right-10 hexagon h-24 w-24 border border-emerald-light/30"
         animate={{ rotate: -360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       />
 
+      {/* Animated background blobs */}
+      <motion.div
+        className="absolute left-1/4 top-1/2 h-96 w-96 rounded-full opacity-20 blur-3xl"
+        style={{ background: "radial-gradient(circle, var(--gold), transparent 70%)" }}
+        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+
       <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-10">
         <Reveal>
-          <span className="badge-premium mb-6 mx-auto">
+          <span className="badge-premium mb-6 mx-auto" style={{ background: "rgba(245,200,66,0.15)", borderColor: "rgba(245,200,66,0.4)", color: "#f5c842" }}>
             {lang === "fr" ? "Démarrons ensemble" : "Let's start together"}
           </span>
         </Reveal>
@@ -50,7 +66,7 @@ export function CtaBanner() {
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
-          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+          <p className="mx-auto mt-6 max-w-2xl text-base text-ivory/80 md:text-lg">
             {lang === "fr"
               ? "Notre équipe d'experts vous accompagne de l'exploration à l'exploitation, avec excellence, sécurité et responsabilité."
               : "Our team of experts supports you from exploration to operations, with excellence, safety and responsibility."}
@@ -69,7 +85,7 @@ export function CtaBanner() {
             <a
               href="tel:626683232"
               data-cursor="hover"
-              className="group inline-flex items-center gap-2 rounded-full border border-gold/40 px-7 py-3.5 text-sm font-medium text-gold transition-all hover:bg-gold/10"
+              className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3.5 text-sm font-medium text-ivory transition-all hover:border-gold hover:bg-gold/10 hover:text-gold"
             >
               <Phone className="h-4 w-4" />
               626 68 32 32

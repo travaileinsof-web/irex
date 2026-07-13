@@ -7,9 +7,10 @@ import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { toast } from "sonner";
+import { images } from "@/lib/images";
 
 export function Contact() {
-    const lang = useSiteStore((s) => s.lang);
+  const lang = useSiteStore((s) => s.lang);
   const c = content[lang].contact;
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "" });
@@ -32,9 +33,14 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative bg-coal py-32">
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+    <section id="contact" className="relative bg-ivory py-32 overflow-hidden">
+      <div className="absolute inset-0 grid-pattern-dark opacity-40" />
+      <motion.div
+        className="absolute top-20 left-10 h-72 w-72 rounded-full opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, var(--emerald), transparent 70%)" }}
+        animate={{ y: [0, 30, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
         {/* Header */}
@@ -43,12 +49,12 @@ export function Contact() {
             <span className="badge-premium mb-6 mx-auto">{c.tag}</span>
           </Reveal>
           <Reveal delay={0.1}>
-            <h2 className="font-display text-4xl font-bold text-ivory md:text-5xl lg:text-6xl">
+            <h2 className="font-display text-4xl font-bold text-obsidian md:text-5xl lg:text-6xl">
               <RevealWords text={c.title} />
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+            <p className="mx-auto mt-6 max-w-2xl text-base text-graphite/70 md:text-lg">
               {c.subtitle}
             </p>
           </Reveal>
@@ -63,34 +69,40 @@ export function Contact() {
                   key={i}
                   whileHover={{ x: 4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="group flex items-start gap-4 rounded-2xl border border-border bg-obsidian p-5 transition-colors hover:border-gold/30"
+                  className="group flex items-start gap-4 rounded-2xl border border-obsidian/10 bg-white p-5 shadow-sm transition-colors hover:border-gold/30"
                 >
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-gold/10 to-copper/10 ring-1 ring-gold/20">
-                    <item.icon className="h-5 w-5 text-gold" />
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-gold/15 to-emerald/15 ring-1 ring-gold/20">
+                    <item.icon className="h-5 w-5 text-copper" />
                   </div>
                   <div>
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-emerald">
                       {item.label}
                     </div>
-                    <p className="mt-1 whitespace-pre-line text-sm font-medium text-ivory">
+                    <p className="mt-1 whitespace-pre-line text-sm font-medium text-obsidian">
                       {item.value}
                     </p>
                   </div>
                 </motion.div>
               ))}
 
-              {/* Map placeholder */}
-              <div className="relative mt-2 h-48 overflow-hidden rounded-2xl border border-border bg-obsidian">
-                <div className="absolute inset-0 grid-pattern opacity-40" />
+              {/* Map with image */}
+              <div className="relative mt-2 h-56 overflow-hidden rounded-2xl border border-obsidian/10 shadow-sm">
+                <img
+                  src={images.office[0]}
+                  alt="IREX Mining office location"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-obsidian/70 via-obsidian/20 to-transparent" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
                   <div className="relative">
-                    <span className="absolute inline-flex h-12 w-12 animate-ping rounded-full bg-gold/30" />
-                    <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gold">
+                    <span className="absolute inline-flex h-12 w-12 animate-ping rounded-full bg-gold/40" />
+                    <div className="relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-gold to-copper shadow-lg">
                       <MapPin className="h-5 w-5 text-obsidian" />
                     </div>
                   </div>
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Conakry, Guinea
+                  <span className="text-sm uppercase tracking-wider text-ivory font-medium">
+                    Matoto Centre, Conakry
                   </span>
                 </div>
               </div>
@@ -101,9 +113,9 @@ export function Contact() {
           <Reveal delay={0.2}>
             <form
               onSubmit={handleSubmit}
-              className="relative overflow-hidden rounded-3xl border border-border bg-obsidian p-8 md:p-10"
+              className="relative overflow-hidden rounded-3xl border border-obsidian/10 bg-white p-8 shadow-xl md:p-10"
             >
-              <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold/5 blur-3xl" />
+              <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gold/10 blur-3xl" />
 
               <div className="relative grid gap-5 sm:grid-cols-2">
                 <Field
@@ -138,7 +150,7 @@ export function Contact() {
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-emerald">
                     {c.form.message}
                   </label>
                   <textarea
@@ -146,7 +158,7 @@ export function Contact() {
                     rows={5}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full resize-none rounded-xl border border-border bg-coal px-4 py-3 text-sm text-ivory placeholder:text-muted-foreground/50 focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/30 transition-colors"
+                    className="w-full resize-none rounded-xl border border-obsidian/15 bg-cream px-4 py-3 text-sm text-obsidian placeholder:text-graphite/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20 transition-colors"
                   />
                 </div>
                 <div className="sm:col-span-2">
@@ -154,7 +166,7 @@ export function Contact() {
                     type="submit"
                     disabled={submitted}
                     data-cursor="hover"
-                    className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold to-copper px-6 py-3.5 text-sm font-medium text-obsidian transition-all hover:from-gold-bright hover:to-copper-light disabled:opacity-50"
+                    className="group flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold to-copper px-6 py-3.5 text-sm font-medium text-obsidian transition-all hover:from-gold-bright hover:to-copper-light disabled:opacity-50 hover:shadow-[0_8px_30px_-8px_rgba(212,165,71,0.6)]"
                   >
                     {submitted ? (
                       <>
@@ -193,16 +205,16 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+      <label className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-emerald">
         {label}
-        {required && <span className="text-gold"> *</span>}
+        {required && <span className="text-copper"> *</span>}
       </label>
       <input
         type={type}
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-border bg-coal px-4 py-3 text-sm text-ivory placeholder:text-muted-foreground/50 focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/30 transition-colors"
+        className="w-full rounded-xl border border-obsidian/15 bg-cream px-4 py-3 text-sm text-obsidian placeholder:text-graphite/40 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/20 transition-colors"
       />
     </div>
   );

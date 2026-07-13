@@ -15,6 +15,7 @@ import {
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
+import { serviceImages } from "@/lib/images";
 
 const iconMap: Record<string, typeof Compass> = {
   compass: Compass,
@@ -28,15 +29,16 @@ const iconMap: Record<string, typeof Compass> = {
 };
 
 export function Services() {
-  const lang = useSiteStore((s) => s.lang);
   const setSection = useSiteStore((s) => s.setSection);
+  const lang = useSiteStore((s) => s.lang);
   const c = content[lang].services;
+  const serviceKeys = ["compass", "hard-hat", "pickaxe", "leaf", "shield", "truck", "graduation", "clipboard"];
 
   return (
     <section id="services" className="relative bg-coal py-32">
-      {/* Background pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+      {/* Background pattern + glow */}
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <div className="absolute left-1/2 top-0 h-96 w-[800px] -translate-x-1/2 rounded-full bg-gold/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
         {/* Header */}
@@ -52,50 +54,59 @@ export function Services() {
             </Reveal>
           </div>
           <Reveal delay={0.2}>
-            <p className="max-w-md text-base text-muted-foreground">{c.subtitle}</p>
+            <p className="max-w-md text-base text-ivory/70">{c.subtitle}</p>
           </Reveal>
         </div>
 
-        {/* Services grid */}
-        <div className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
+        {/* Services grid — with images on hover */}
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.items.map((s, i) => {
             const Icon = iconMap[s.icon] ?? Compass;
+            const img = serviceImages[serviceKeys[i]] ?? serviceImages.compass;
             return (
               <Reveal key={i} delay={(i % 4) * 0.08}>
-                <button
+                <motion.button
                   onClick={() => setSection("contact")}
                   data-cursor="hover"
-                  className="group relative flex h-full w-full flex-col items-start gap-6 bg-coal p-8 text-left transition-all duration-500 hover:bg-obsidian"
+                  whileHover={{ y: -8 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-gold/15 bg-gradient-to-b from-graphite to-coal text-left transition-all duration-500 hover:border-gold/40"
                 >
-                  {/* Number */}
-                  <div className="flex w-full items-center justify-between">
-                    <span className="font-mono text-xs text-muted-foreground transition-colors group-hover:text-gold">
-                      [ {String(i + 1).padStart(2, "0")} ]
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 -translate-y-1 translate-x-1 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 text-gold" />
-                  </div>
-
-                  {/* Icon */}
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-2xl bg-gold/20 blur-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <div className="relative inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-gold/20 bg-gradient-to-br from-gold/5 to-copper/5 transition-all duration-500 group-hover:border-gold/40 group-hover:from-gold/15 group-hover:to-copper/15">
-                      <Icon className="h-6 w-6 text-gold transition-transform duration-500 group-hover:scale-110" />
+                  {/* Image background that reveals on hover */}
+                  <div className="relative h-44 overflow-hidden">
+                    <img src={img} alt={s.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-coal via-coal/60 to-transparent" />
+                    {/* Number */}
+                    <div className="absolute left-4 top-4">
+                      <span className="font-mono text-xs text-gold">
+                        [ {String(i + 1).padStart(2, "0")} ]
+                      </span>
+                    </div>
+                    {/* Arrow */}
+                    <div className="absolute right-4 top-4 flex h-9 w-9 -translate-y-1 items-center justify-center rounded-full bg-gold text-obsidian opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                    {/* Icon overlay */}
+                    <div className="absolute bottom-4 left-4">
+                      <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-coal/80 backdrop-blur-sm">
+                        <Icon className="h-5 w-5 text-gold" />
+                      </div>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1">
-                    <h3 className="font-display text-xl font-bold text-ivory transition-colors group-hover:text-gold">
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-display text-lg font-bold text-ivory transition-colors group-hover:text-gold">
                       {s.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-2 text-sm leading-relaxed text-ivory/60">
                       {s.desc}
                     </p>
                   </div>
 
                   {/* Bottom indicator */}
-                  <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-gold to-copper transition-all duration-500 group-hover:w-full" />
-                </button>
+                  <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-gold to-emerald transition-all duration-500 group-hover:w-full" />
+                </motion.button>
               </Reveal>
             );
           })}

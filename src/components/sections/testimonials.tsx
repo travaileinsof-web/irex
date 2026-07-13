@@ -6,9 +6,10 @@ import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal } from "@/components/site/reveal";
+import { testimonialBg } from "@/lib/images";
 
 export function Testimonials() {
-    const lang = useSiteStore((s) => s.lang);
+  const lang = useSiteStore((s) => s.lang);
   const c = content[lang].testimonials;
   const [active, setActive] = useState(0);
 
@@ -16,16 +17,40 @@ export function Testimonials() {
   const prev = () => setActive((a) => (a - 1 + c.items.length) % c.items.length);
 
   return (
-    <section className="relative overflow-hidden bg-obsidian py-32">
-      {/* Background blobs */}
-      <div className="absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-gold/5 blur-3xl" />
-      <div className="absolute -right-32 bottom-1/4 h-96 w-96 rounded-full bg-copper/5 blur-3xl" />
+    <section className="relative overflow-hidden bg-emerald-deep py-32">
+      {/* Background image with overlay */}
+      <img
+        src={testimonialBg}
+        alt="Mining operations"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover opacity-15"
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-deep via-emerald-deep/95 to-emerald/85" />
+
+      {/* Floating blobs */}
+      <motion.div
+        className="absolute -left-32 top-1/4 h-96 w-96 rounded-full opacity-20 blur-3xl"
+        style={{ background: "radial-gradient(circle, var(--gold), transparent 70%)" }}
+        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -right-32 bottom-1/4 h-96 w-96 rounded-full opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, var(--emerald-light), transparent 70%)" }}
+        animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative mx-auto max-w-[1200px] px-6 lg:px-10">
         {/* Header */}
         <Reveal>
           <div className="mb-16 text-center">
-            <span className="badge-premium mb-6 mx-auto">{c.tag}</span>
+            <span
+              className="badge-premium mb-6 mx-auto"
+              style={{ background: "rgba(245,200,66,0.15)", borderColor: "rgba(245,200,66,0.4)", color: "#f5c842" }}
+            >
+              {c.tag}
+            </span>
             <h2 className="font-display text-4xl font-bold text-ivory md:text-5xl lg:text-6xl">
               {c.title}
             </h2>
@@ -42,10 +67,10 @@ export function Testimonials() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="relative rounded-3xl border border-gold/20 bg-gradient-to-br from-coal via-obsidian to-coal p-10 md:p-16"
+                className="relative overflow-hidden rounded-3xl border border-gold/30 bg-emerald-deep/60 backdrop-blur-xl p-10 md:p-16"
               >
                 {/* Big quote icon */}
-                <Quote className="absolute right-10 top-10 h-20 w-20 text-gold/10" />
+                <Quote className="absolute right-10 top-10 h-20 w-20 text-gold/15" />
 
                 {/* Stars */}
                 <div className="mb-8 flex gap-1">
@@ -68,7 +93,7 @@ export function Testimonials() {
                   </div>
                   <div>
                     <div className="font-semibold text-ivory">{c.items[active].author}</div>
-                    <div className="text-sm text-muted-foreground">{c.items[active].company}</div>
+                    <div className="text-sm text-ivory/70">{c.items[active].company}</div>
                   </div>
                 </div>
               </motion.div>
@@ -83,7 +108,7 @@ export function Testimonials() {
                     onClick={() => setActive(i)}
                     data-cursor="hover"
                     className={`h-1.5 rounded-full transition-all duration-500 ${
-                      i === active ? "w-12 bg-gold" : "w-6 bg-border hover:bg-gold/40"
+                      i === active ? "w-12 bg-gold" : "w-6 bg-ivory/30 hover:bg-gold/40"
                     }`}
                     aria-label={`Slide ${i + 1}`}
                   />
@@ -93,7 +118,7 @@ export function Testimonials() {
                 <button
                   onClick={prev}
                   data-cursor="hover"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-ivory transition-all hover:border-gold/40 hover:bg-gold/10 hover:text-gold"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory transition-all hover:border-gold hover:bg-gold hover:text-obsidian"
                   aria-label="Previous"
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -101,7 +126,7 @@ export function Testimonials() {
                 <button
                   onClick={next}
                   data-cursor="hover"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-ivory transition-all hover:border-gold/40 hover:bg-gold/10 hover:text-gold"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/30 text-ivory transition-all hover:border-gold hover:bg-gold hover:text-obsidian"
                   aria-label="Next"
                 >
                   <ChevronRight className="h-4 w-4" />

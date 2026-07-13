@@ -1,28 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
+import { ArrowUpRight, Calendar } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
-
-const projectGradients = [
-  "from-amber-900/40 via-coal to-obsidian",
-  "from-emerald-900/40 via-coal to-obsidian",
-  "from-orange-900/40 via-coal to-obsidian",
-  "from-yellow-900/40 via-coal to-obsidian",
-  "from-rose-900/40 via-coal to-obsidian",
-  "from-stone-800/40 via-coal to-obsidian",
-];
+import { projectImages } from "@/lib/images";
 
 export function Projects() {
-    const lang = useSiteStore((s) => s.lang);
+  const lang = useSiteStore((s) => s.lang);
   const c = content[lang].projects;
 
   return (
-    <section id="projects" className="relative bg-coal py-32">
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+    <section id="projects" className="relative bg-obsidian py-32 overflow-hidden">
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+
+      {/* Background floating blobs */}
+      <motion.div
+        className="absolute top-1/4 left-10 h-72 w-72 rounded-full opacity-15 blur-3xl"
+        style={{ background: "radial-gradient(circle, var(--emerald), transparent 70%)" }}
+        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
         {/* Header */}
@@ -38,43 +38,41 @@ export function Projects() {
             </Reveal>
           </div>
           <Reveal delay={0.2}>
-            <p className="max-w-md text-base text-muted-foreground">{c.subtitle}</p>
+            <p className="max-w-md text-base text-ivory/70">{c.subtitle}</p>
           </Reveal>
         </div>
 
-        {/* Projects grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Projects grid with images */}
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {c.items.map((p, i) => (
             <Reveal key={i} delay={(i % 3) * 0.1}>
               <motion.article
                 data-cursor="hover"
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                className="group relative h-80 overflow-hidden rounded-2xl border border-border bg-coal"
+                className="group relative h-96 overflow-hidden rounded-2xl border border-gold/15"
               >
-                {/* Background gradient */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${projectGradients[i % projectGradients.length]}`} />
-                <div className="absolute inset-0 grid-pattern opacity-30" />
+                {/* Image */}
+                <img src={projectImages[i % projectImages.length]} alt={p.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/60 to-obsidian/20" />
 
                 {/* Big number watermark */}
                 <div className="absolute -right-4 top-0 select-none font-display text-[10rem] font-bold leading-none text-ivory/5 transition-all duration-700 group-hover:translate-x-2 group-hover:text-ivory/10">
                   {String(i + 1).padStart(2, "0")}
                 </div>
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/60 to-transparent" />
-
                 {/* Status badge */}
                 <div className="absolute left-4 top-4 flex items-center gap-2">
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider ${
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider backdrop-blur-sm ${
                       p.status === "Livré" || p.status === "Delivered"
-                        ? "bg-emerald-500/20 text-emerald-300"
-                        : "bg-gold/20 text-gold"
+                        ? "bg-emerald/30 text-emerald-light border border-emerald/40"
+                        : "bg-gold/30 text-gold-bright border border-gold/40"
                     }`}
                   >
                     <span className={`h-1.5 w-1.5 rounded-full ${
-                      p.status === "Livré" || p.status === "Delivered" ? "bg-emerald-400" : "bg-gold animate-pulse"
+                      p.status === "Livré" || p.status === "Delivered" ? "bg-emerald-light" : "bg-gold animate-pulse"
                     }`} />
                     {p.status}
                   </span>
@@ -82,9 +80,9 @@ export function Projects() {
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <div className="mb-2 flex items-center gap-3 text-[11px] uppercase tracking-wider text-muted-foreground">
-                    <span className="text-gold">{p.sector}</span>
-                    <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                  <div className="mb-2 flex items-center gap-3 text-[11px] uppercase tracking-wider text-ivory/70">
+                    <span className="text-gold font-medium">{p.sector}</span>
+                    <span className="h-1 w-1 rounded-full bg-ivory/40" />
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       {p.year}
@@ -93,15 +91,14 @@ export function Projects() {
                   <h3 className="font-display text-xl font-bold text-ivory transition-colors group-hover:text-gold">
                     {p.name}
                   </h3>
-                  {/* Hover reveal arrow */}
                   <div className="mt-3 flex items-center gap-2 text-sm text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
                     <span className="link-underline">{lang === "fr" ? "Voir l'étude de cas" : "View case study"}</span>
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </div>
                 </div>
 
-                {/* Border glow */}
-                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/30 transition-opacity duration-500 group-hover:opacity-100" />
+                {/* Border glow on hover */}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/40 transition-opacity duration-500 group-hover:opacity-100" />
               </motion.article>
             </Reveal>
           ))}
