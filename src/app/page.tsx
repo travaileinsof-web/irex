@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useSiteStore } from "@/lib/store";
 
 // Premium UX components
@@ -32,7 +31,6 @@ import { CtaBanner } from "@/components/sections/cta-banner";
 
 export default function Home() {
   const section = useSiteStore((s) => s.section);
-  const isLoaded = useSiteStore((s) => s.isLoaded);
 
   // Scroll to top on section change
   useEffect(() => {
@@ -46,15 +44,7 @@ export default function Home() {
       <ScrollProgress />
       <Navbar />
 
-      <AnimatePresence mode="wait">
-        <motion.main
-          key={section}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="min-h-screen"
-        >
+      <main key={section} className="min-h-screen page-enter">
           {section === "home" && (
             <>
               <Hero />
@@ -156,8 +146,7 @@ export default function Home() {
               <CtaBanner />
             </>
           )}
-        </motion.main>
-      </AnimatePresence>
+      </main>
 
       <Footer />
       <Chatbot />

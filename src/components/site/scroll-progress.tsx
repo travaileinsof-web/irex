@@ -1,22 +1,45 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 /**
- * Scroll progress bar fixed at the top of the page
+ * Scroll progress bar — uses native scroll event + CSS transform (no Framer Motion)
+ * Throttled via requestAnimationFrame for max performance
  */
 export function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+ const barRef = useRef<HTMLDivElement>(null);
+ const ticking = useRef(false);
 
-  return (
-    <motion.div
-      className="fixed left-0 right-0 top-0 z-[200] h-[2px] origin-left bg-gradient-to-r from-gold via-gold-bright to-copper"
-      style={{ scaleX }}
-    />
-  );
+ useEffect(() => {
+ const update = () => {
+ const scrollTop = window.scrollY;
+ const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+ const progress = docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0;
+ if (barRef.current) {
+ // Use transform instead of width for GPU acceleration
+ barRef.current.style.transform = `scaleX(${progress})`;
+ }
+ ticking.current = false;
+ };
+
+ const onScroll = () => {
+ if (!ticking.current) {
+ window.requestAnimationFrame(update);
+ ticking.current = true;
+ }
+ };
+
+ window.addEventListener("scroll", onScroll, { passive: true });
+ update(); // initial
+
+ return () => window.removeEventListener("scroll", onScroll);
+ }, []);
+
+ return (
+ <div
+ ref={barRef}
+ className="fixed left-0 right-0 top-0 z-[200] h-[2px] origin-left bg-gradient-to-r from-gold via-gold-bright to-copper gpu"
+ style={{ transform: "scaleX(0)", willChange: "transform" }}
+ />
+ );
 }

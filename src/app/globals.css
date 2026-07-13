@@ -241,6 +241,96 @@
   animation: float-slow 10s ease-in-out infinite;
 }
 
+/* GPU-accelerated blob drift (replaces Framer Motion infinite loops) */
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(30px, -20px, 0) scale(1.05); }
+  66% { transform: translate3d(-20px, 20px, 0) scale(0.95); }
+}
+.animate-blob-1 {
+  animation: blob-drift-1 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(-30px, 20px, 0) scale(1.05); }
+  66% { transform: translate3d(20px, -20px, 0) scale(0.95); }
+}
+.animate-blob-2 {
+  animation: blob-drift-2 25s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(20px, -15px, 0); }
+}
+.animate-blob-3 {
+  animation: blob-drift-3 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* GPU-accelerated hexagon rotation */
+@keyframes spin-cw {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-cw {
+  animation: spin-cw 30s linear infinite;
+  will-change: transform;
+}
+@keyframes spin-ccw {
+  to { transform: rotate(-360deg); }
+}
+.animate-spin-ccw {
+  animation: spin-ccw 40s linear infinite;
+  will-change: transform;
+}
+
+/* GPU-accelerated particle drift (replaces Framer Motion) */
+@keyframes particle-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translate3d(0, -100px, 0); opacity: 0; }
+}
+.animate-particle {
+  animation: particle-rise var(--p-duration, 8s) ease-in-out infinite;
+  animation-delay: var(--p-delay, 0s);
+  will-change: transform, opacity;
+}
+
+/* GPU-accelerated Ken Burns */
+@keyframes ken-burns {
+  0% { transform: scale(1) translate3d(0, 0, 0); }
+  100% { transform: scale(1.12) translate3d(-2%, -2%, 0); }
+}
+.animate-ken-burns {
+  animation: ken-burns 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* GPU-accelerated heart float (replaces Framer Motion) */
+@keyframes heart-float {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.2; }
+  50% { transform: translate3d(0, -30px, 0); opacity: 0.4; }
+}
+.animate-heart {
+  animation: heart-float var(--h-duration, 8s) ease-in-out infinite;
+  animation-delay: var(--h-delay, 0s);
+  will-change: transform, opacity;
+}
+
+/* GPU-accelerated vertical bounce (for scroll indicators) */
+@keyframes bounce-y {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 8px, 0); }
+}
+.animate-bounce-y {
+  animation: bounce-y 2s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Slow pulse */
 @keyframes pulse-slow {
   0%, 100% { opacity: 0.4; transform: scale(1); }
@@ -306,9 +396,11 @@
 /* Premium card hover lift */
 .card-lift {
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
+  transform: translateZ(0);
+  will-change: transform;
 }
 .card-lift:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) translateZ(0);
   box-shadow: 0 30px 60px -15px rgba(212, 165, 71, 0.2), 0 0 0 1px rgba(212, 165, 71, 0.25);
 }
 
@@ -378,25 +470,19 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Glass effect */
+/* Glass effect — solid backgrounds (no backdrop-filter for performance) */
 .glass {
-  background: rgba(20, 20, 26, 0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(20, 20, 26, 0.92);
   border: 1px solid rgba(212, 165, 71, 0.1);
 }
 
 .glass-strong {
-  background: rgba(10, 10, 11, 0.85);
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  background: rgba(10, 10, 11, 0.96);
   border: 1px solid rgba(212, 165, 71, 0.15);
 }
 
 .glass-light {
-  background: rgba(250, 247, 240, 0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(250, 247, 240, 0.92);
   border: 1px solid rgba(212, 165, 71, 0.2);
 }
 
@@ -650,4 +736,53 @@
 }
 .glow-text-emerald {
   text-shadow: 0 0 30px rgba(76, 168, 132, 0.5);
+}
+
+/* Performance utilities */
+.gpu {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* CSS hover lift (replaces Framer Motion whileHover springs) */
+.hover-lift {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  transform: translateZ(0);
+}
+.hover-lift:hover {
+  transform: translateY(-8px) translateZ(0);
+}
+
+.hover-lift-sm {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+.hover-lift-sm:hover {
+  transform: translateY(-4px) translateZ(0);
+}
+
+.hover-lift-xs {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+.hover-lift-xs:hover {
+  transform: translateX(4px) translateZ(0);
+}
+
+/* Content-visibility for offscreen section perf */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Smooth scroll with reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
