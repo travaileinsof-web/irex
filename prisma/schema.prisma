@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// IREX Mining — Complete Prisma schema
+// Compatible with SQLite (dev) and PostgreSQL (Neon production)
+// For production: change provider to "postgresql" and update DATABASE_URL
 
 generator client {
   provider = "prisma-client-js"
@@ -13,20 +11,278 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+// ============================================
+// AUTH
+// ============================================
+
+model AdminUser {
   id        String   @id @default(cuid())
   email     String   @unique
-  name      String?
+  name      String
+  password  String   // hashed via bcrypt
+  role      String   @default("admin") // "admin" | "editor"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// ============================================
+// SHOP — Categories + Products/Services
+// ============================================
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  nameEn      String?
+  description String?
+  descriptionEn String?
+  icon        String?   // lucide icon name
+  order       Int       @default(0)
+  published   Boolean   @default(true)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  nameEn      String?
+  description String
+  descriptionEn String?
+  price       Int      // in GNF
+  badge       String?  // "Best-seller", "Nouveau", "Sur-mesure"
+  image       String?  // URL or base64
+  type        String   @default("product") // "product" | "service" | "software"
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  submissions Submission[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// PROJECTS — past, ongoing, future
+// ============================================
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  nameEn      String?
+  description String
+  descriptionEn String?
+  sector      String   // "Exploration", "HSE", "Environnement", etc.
+  year        String
+  status      String   // "Livré" / "En cours" / "À venir" — "Delivered" / "Ongoing" / "Upcoming"
+  image       String?
+  client      String?
+  location    String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// TEAM
+// ============================================
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  role        String
+  roleEn      String?
+  expertise   String
+  expertiseEn String?
+  bio         String?
+  bioEn       String?
+  photo       String?
+  linkedin    String?
+  twitter     String?
+  email       String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// BLOG
+// ============================================
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String   @unique
+  titleEn     String?
+  excerpt     String?
+  excerptEn   String?
+  content     String   // markdown
+  contentEn   String?
+  category    String   // "Stratégie", "HSE", "Formation", "Innovation"
+  coverImage  String?
+  author      String?
+  readTime    String?  // "8 min"
+  published   Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// EVENTS
+// ============================================
+
+model Event {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  nameEn      String?
+  description String?
+  descriptionEn String?
+  date        String
+  location    String
+  type        String   // "Sommet", "Formation", "Conférence", "Workshop"
+  image       String?
+  registerUrl String?
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// CAREERS — Job openings
+// ============================================
+
+model JobOpening {
+  id          String   @id @default(cuid())
+  title       String   @unique
+  titleEn     String?
+  description String
+  descriptionEn String?
+  location    String
+  type        String   // "CDI", "CDD", "Stage", "Permanent", "Fixed-term"
+  dept        String
+  salary      String?
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// DONATIONS — Tiers
+// ============================================
+
+model DonationTier {
+  id          String   @id @default(cuid())
+  amount      Int      @unique // GNF
+  title       String?
+  titleEn     String?
+  perks       String   // newline-separated list of perks
+  perksEn     String?
+  popular     Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  donations   Donation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Donation {
+  id          String   @id @default(cuid())
+  donorName   String
+  donorEmail  String
+  donorPhone  String?
+  amount      Int
+  tierId      String?
+  tier        DonationTier? @relation(fields: [tierId], references: [id])
+  message     String?
+  status      String   @default("pending") // pending | confirmed
+  createdAt   DateTime @default(now())
+}
+
+// ============================================
+// FAQ
+// ============================================
+
+model FaqItem {
+  id          String   @id @default(cuid())
+  question    String   @unique
+  questionEn  String?
+  answer      String
+  answerEn    String?
+  category    String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// STATS — Site-wide figures
+// ============================================
+
+model SiteStat {
+  id          String   @id @default(cuid())
+  key         String   @unique // "complianceRate", "productCategories", "yearsExpertise", "supportAvailability"
+  label       String
+  labelEn     String?
+  value       Int
+  suffix      String?  // "%", "+", "/7"
+  icon        String?
+  order       Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// PARTNERS
+// ============================================
+
+model Partner {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  logo        String?  // URL or base64
+  website     String?
+  order       Int      @default(0)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// CONTACT INFO (single row, editable)
+// ============================================
+
+model ContactInfo {
+  id          String   @id @default(cuid())
+  address     String
+  phone       String
+  email       String
+  hours       String
+  hoursEn     String?
+  mapUrl      String?  // Google Maps embed URL
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// SUBMISSIONS — From public forms (product inquiry, contact, etc.)
+// ============================================
+
+model Submission {
+  id          String   @id @default(cuid())
+  type        String   // "product_inquiry" | "contact" | "career" | "donation"
+  productId   String?
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  subject     String?
+  message     String
+  status      String   @default("new") // new | read | handled
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

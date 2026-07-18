@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSiteStore } from "@/lib/store";
+import { Logo } from "@/components/site/logo";
 
 /**
  * Premium page loader — animated IREX logo + progress bar
@@ -49,8 +50,8 @@ export function PageLoader() {
  <div className="relative h-20 w-20">
  {/* Rotating gradient border */}
  <div className="absolute inset-0 hexagon animate-rotate-border" style={{ background: "conic-gradient(from 0deg, transparent, var(--gold), transparent 30%)" }} />
- <div className="absolute inset-[2px] hexagon bg-obsidian flex items-center justify-center">
- <span className="font-display text-3xl font-bold text-gradient-gold">I</span>
+ <div className="absolute inset-[3px] hexagon bg-obsidian flex items-center justify-center">
+ <Logo size={56} variant="mark" />
  </div>
  </div>
  </motion.div>

@@ -5,6 +5,7 @@ import { ArrowUpRight, Send, Phone, Mail, MapPin, ArrowUp } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content, type Section } from "@/lib/content";
 import { toast } from "sonner";
+import { Logo } from "@/components/site/logo";
 
 export function Footer() {
  const lang = useSiteStore((s) => s.lang);
@@ -64,17 +65,8 @@ export function Footer() {
  <div className="grid gap-12 pb-16 lg:grid-cols-[1.5fr_2fr_1fr]">
  {/* Brand */}
  <div>
- <button onClick={() => go("home")} className="group flex items-center gap-3">
- <div className="relative h-10 w-10">
- <div className="absolute inset-0 hexagon bg-gradient-to-br from-gold to-copper" />
- <div className="absolute inset-[2px] hexagon bg-obsidian flex items-center justify-center">
- <span className="font-display text-lg font-bold text-gradient-gold">I</span>
- </div>
- </div>
- <div className="flex flex-col leading-none">
- <span className="font-display text-sm font-bold tracking-[0.25em] text-ivory">IREX</span>
- <span className="text-[8px] uppercase tracking-[0.3em] text-muted-foreground">Mining</span>
- </div>
+ <button onClick={() => go("home")} className="group flex items-center transition-transform hover:scale-105" aria-label="IREX Mining — Home">
+ <Logo size={40} />
  </button>
  <p className="mt-2 font-display text-sm font-medium text-gold">{c.tagline}</p>
  <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">{c.description}</p>

@@ -42,7 +42,7 @@ export const content = {
       title2: "Minière",
       title3: "Façonnée pour l'Avenir",
       subtitle:
-        "IREX Mining conçoit des solutions d'ingénierie minière innovantes, durables et responsables — de l'exploration à l'exploitation, en plaçant la performance, l'environnement et les communautés au cœur de chaque intervention.",
+        "Notre engagement est d'aider nos partenaires à améliorer leurs performances, à maîtriser leurs risques et à réaliser des projets durables, conformes aux meilleures pratiques et normes internationales et locales.",
       primaryCta: "Découvrir nos Services",
       secondaryCta: "Nos Réalisations",
       stats: [
@@ -303,7 +303,7 @@ export const content = {
       title2: "Excellence",
       title3: "Shaped for the Future",
       subtitle:
-        "IREX Mining designs innovative, sustainable and responsible mining engineering solutions — from exploration to operations, placing performance, environment and communities at the heart of every engagement.",
+        "Our commitment is to help our partners improve their performance, manage their risks, and deliver sustainable projects that comply with the best international and local practices and standards.",
       primaryCta: "Discover our Services",
       secondaryCta: "Our Projects",
       stats: [

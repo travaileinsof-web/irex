@@ -6,6 +6,7 @@ import { Menu, X, Globe, ArrowUpRight } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content, type Section } from "@/lib/content";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/site/logo";
 
 const SECTIONS: { id: Section; label: keyof ReturnType<typeof getNavLabels> }[] = [
  { id: "home", label: "home" },
@@ -67,23 +68,11 @@ export function Navbar() {
  {/* Logo */}
  <button
  onClick={() => go("home")}
- className="group flex items-center gap-3"
+ className="group flex items-center transition-transform hover:scale-105"
  data-cursor="hover"
+ aria-label="IREX Mining — Home"
  >
- <div className="relative h-10 w-10">
- <div className="absolute inset-0 hexagon bg-gradient-to-br from-gold to-copper opacity-90 group-hover:opacity-100 transition-opacity" />
- <div className="absolute inset-[2px] hexagon bg-obsidian flex items-center justify-center">
- <span className="font-display text-lg font-bold text-gradient-gold">I</span>
- </div>
- </div>
- <div className="flex flex-col leading-none">
- <span className="font-display text-sm font-bold tracking-[0.25em] text-ivory">
- IREX
- </span>
- <span className="text-[8px] uppercase tracking-[0.3em] text-muted-foreground">
- Mining
- </span>
- </div>
+ <Logo size={38} />
  </button>
 
  {/* Desktop nav */}

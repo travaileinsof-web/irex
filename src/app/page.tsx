@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSiteStore } from "@/lib/store";
 
 // Premium UX components
@@ -10,6 +10,7 @@ import { ScrollProgress } from "@/components/site/scroll-progress";
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
 import { Chatbot } from "@/components/site/chatbot";
+import { ProductInquiryModal, type ApiProduct } from "@/components/site/product-inquiry-modal";
 
 // Sections
 import { Hero } from "@/components/sections/hero";
@@ -31,6 +32,7 @@ import { CtaBanner } from "@/components/sections/cta-banner";
 
 export default function Home() {
   const section = useSiteStore((s) => s.section);
+  const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
 
   // Scroll to top on section change
   useEffect(() => {
@@ -44,6 +46,8 @@ export default function Home() {
       <ScrollProgress />
       <Navbar />
 
+      <ProductInquiryModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+
       <main key={section} className="min-h-screen page-enter">
           {section === "home" && (
             <>
@@ -52,7 +56,7 @@ export default function Home() {
               <About />
               <Services />
               <Stats />
-              <Products />
+              <Products onSelectProduct={setSelectedProduct} />
               <Projects />
               <Testimonials />
               <Team />
@@ -75,7 +79,7 @@ export default function Home() {
             <>
               <div className="pt-20" />
               <Services />
-              <Products />
+              <Products onSelectProduct={setSelectedProduct} />
               <Projects />
               <CtaBanner />
             </>
@@ -83,7 +87,7 @@ export default function Home() {
           {section === "products" && (
             <>
               <div className="pt-20" />
-              <Products />
+              <Products onSelectProduct={setSelectedProduct} />
               <CtaBanner />
               <FAQ />
             </>
