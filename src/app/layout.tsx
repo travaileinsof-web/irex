@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   keywords: ["IREX Mining", "ingénierie minière", "Guinée", "Conakry", "exploration minière", "HSE", "mines", "industrie minière", "consulting minier", "Afrique de l'Ouest"],
   authors: [{ name: "IREX Mining" }],
   icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
+    icon: "/logo.png",
   },
   openGraph: {
     title: "IREX Mining — Ingénierie Minière d'Excellence",
