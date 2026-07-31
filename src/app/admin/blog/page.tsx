@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminBlogPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/blog");
@@ -125,14 +124,14 @@ export default function AdminBlogPage() {
           <Field label="Title (FR)" required>
             <Input
               required
-              value={form.title || ""}
+              value={inputValue(form.title)}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
             />
           </Field>
           <Field label="Title (EN)" >
             <Input
               
-              value={form.titleEn || ""}
+              value={inputValue(form.titleEn)}
               onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
             />
           </Field>
@@ -140,7 +139,7 @@ export default function AdminBlogPage() {
             <Textarea
               
               rows={3}
-              value={form.excerpt || ""}
+              value={inputValue(form.excerpt)}
               onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
             />
           </Field>
@@ -148,7 +147,7 @@ export default function AdminBlogPage() {
             <Textarea
               
               rows={3}
-              value={form.excerptEn || ""}
+              value={inputValue(form.excerptEn)}
               onChange={(e) => setForm({ ...form, excerptEn: e.target.value })}
             />
           </Field>
@@ -156,7 +155,7 @@ export default function AdminBlogPage() {
             <Textarea
               required
               rows={3}
-              value={form.content || ""}
+              value={inputValue(form.content)}
               onChange={(e) => setForm({ ...form, content: e.target.value })}
             />
           </Field>
@@ -164,35 +163,35 @@ export default function AdminBlogPage() {
             <Textarea
               
               rows={3}
-              value={form.contentEn || ""}
+              value={inputValue(form.contentEn)}
               onChange={(e) => setForm({ ...form, contentEn: e.target.value })}
             />
           </Field>
           <Field label="Category" required>
             <Input
               required
-              value={form.category || ""}
+              value={inputValue(form.category)}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             />
           </Field>
           <Field label="Cover Image URL" >
             <Input
               
-              value={form.coverImage || ""}
+              value={inputValue(form.coverImage)}
               onChange={(e) => setForm({ ...form, coverImage: e.target.value })}
             />
           </Field>
           <Field label="Author" >
             <Input
               
-              value={form.author || ""}
+              value={inputValue(form.author)}
               onChange={(e) => setForm({ ...form, author: e.target.value })}
             />
           </Field>
           <Field label="Read Time" >
             <Input
               
-              value={form.readTime || ""}
+              value={inputValue(form.readTime)}
               onChange={(e) => setForm({ ...form, readTime: e.target.value })}
             />
           </Field>

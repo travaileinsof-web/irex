@@ -1,6 +1,7 @@
 "use client";
 
 
+import { useState } from "react";
 import {
  Compass,
  HardHat,
@@ -16,6 +17,7 @@ import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { serviceImages } from "@/lib/images";
+import { ServiceModal, type ServiceItem } from "@/components/site/service-modal";
 
 const iconMap: Record<string, typeof Compass> = {
  compass: Compass,
@@ -33,8 +35,18 @@ export function Services() {
  const lang = useSiteStore((s) => s.lang);
  const c = content[lang].services;
  const serviceKeys = ["compass", "hard-hat", "pickaxe", "leaf", "shield", "truck", "graduation", "clipboard"];
+ const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
  return (
+ <>
+ <ServiceModal 
+   service={selectedService} 
+   onClose={() => setSelectedService(null)} 
+   onContact={() => {
+     setSelectedService(null);
+     setSection("contact");
+   }} 
+ />
  <section id="services" className="relative bg-coal py-32">
  {/* Background pattern + glow */}
  <div className="absolute inset-0 grid-pattern opacity-30" />
@@ -66,7 +78,14 @@ export function Services() {
  return (
  <Reveal key={i} delay={(i % 4) * 0.08}>
  <button
- onClick={() => setSection("contact")}
+ onClick={() => setSelectedService({
+   title: s.title,
+   desc: s.desc,
+   icon: s.icon,
+   image: img,
+   IconComponent: Icon,
+   features: s.features
+ })}
  data-cursor="hover"
  className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-gold/15 bg-gradient-to-b from-graphite to-coal text-left transition-all duration-500 hover:border-gold/40"
  >
@@ -97,7 +116,7 @@ export function Services() {
  <h3 className="font-display text-lg font-bold text-ivory transition-colors group-hover:text-gold">
  {s.title}
  </h3>
- <p className="mt-2 text-sm leading-relaxed text-ivory/60">
+ <p className="mt-2 text-sm leading-relaxed text-ivory/60 line-clamp-3">
  {s.desc}
  </p>
  </div>
@@ -111,5 +130,6 @@ export function Services() {
  </div>
  </div>
  </section>
+ </>
  );
 }

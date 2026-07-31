@@ -5,8 +5,8 @@ import { Heart, Check, ArrowRight, HandHeart, Loader2 } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
-import { toast } from "sonner";
 import { useFetch } from "@/hooks/use-fetch";
+import { DonationModal, type DonationTierInfo } from "@/components/site/donation-modal";
 
 interface ApiDonationTier {
   id: string;
@@ -26,15 +26,10 @@ export function Donations() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].donations;
   const { data: tiers, loading } = useFetch<ApiDonationTier[]>("/api/donations");
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<DonationTierInfo | null>(null);
 
   const handleDonate = (tier: ApiDonationTier) => {
-    setSelected(tier.id);
-    toast.success(
-      lang === "fr"
-        ? `Merci ! Votre don de ${formatPrice(tier.amount, lang)} soutient nos communautés.`
-        : `Thank you! Your donation of ${formatPrice(tier.amount, lang)} supports our communities.`
-    );
+    setSelected({ id: tier.id, amount: tier.amount, title: tier.title, titleEn: tier.titleEn });
   };
 
   return (
@@ -135,17 +130,8 @@ export function Donations() {
                           : "border border-gold/50 text-gold hover:bg-gold hover:text-obsidian"
                       }`}
                     >
-                      {selected === tier.id ? (
-                        <>
-                          <Check className="h-4 w-4" />
-                          {lang === "fr" ? "Merci !" : "Thank you!"}
-                        </>
-                      ) : (
-                        <>
-                          {lang === "fr" ? "Contribuer" : "Contribute"}
-                          <ArrowRight className="h-3.5 w-3.5" />
-                        </>
-                      )}
+                      {lang === "fr" ? "Contribuer" : "Contribute"}
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </Reveal>
@@ -171,6 +157,8 @@ export function Donations() {
           </div>
         </Reveal>
       </div>
+
+      <DonationModal tier={selected} onClose={() => setSelected(null)} />
     </section>
   );
 }

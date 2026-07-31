@@ -1,28 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowUpRight, Clock, Loader2 } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { useFetch } from "@/hooks/use-fetch";
-
-interface ApiBlogPost {
-  id: string;
-  title: string;
-  titleEn: string | null;
-  excerpt: string | null;
-  excerptEn: string | null;
-  category: string;
-  coverImage: string | null;
-  author: string | null;
-  readTime: string | null;
-  publishedAt: string;
-}
+import { BlogModal, type ApiBlogPost } from "@/components/site/blog-modal";
 
 export function Blog() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].blog;
   const { data: items, loading } = useFetch<ApiBlogPost[]>("/api/blog");
+  const [selectedPost, setSelectedPost] = useState<ApiBlogPost | null>(null);
 
   return (
     <section id="blog" className="relative bg-coal py-32 overflow-hidden">
@@ -65,8 +55,9 @@ export function Blog() {
               return (
                 <Reveal key={post.id} delay={(i % 4) * 0.08}>
                   <article
+                    onClick={() => setSelectedPost(post)}
                     data-cursor="hover"
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/15 bg-gradient-to-b from-graphite to-coal transition-all duration-500 hover:border-gold/40 card-lift"
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold/15 bg-gradient-to-b from-graphite to-coal transition-all duration-500 hover:border-gold/40 card-lift cursor-pointer"
                   >
                     <div className="relative aspect-[16/10] overflow-hidden">
                       {post.coverImage ? (
@@ -120,6 +111,8 @@ export function Blog() {
           </div>
         )}
       </div>
+
+      <BlogModal post={selectedPost} onClose={() => setSelectedPost(null)} />
     </section>
   );
 }

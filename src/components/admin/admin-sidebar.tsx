@@ -39,6 +39,7 @@ const navItems = [
   { href: "/admin/partners", label: "Partners", icon: Handshake },
   { href: "/admin/stats", label: "Stats", icon: BarChart3 },
   { href: "/admin/contact-info", label: "Contact Info", icon: MapPin },
+  { href: "/admin/settings", label: "Pages Settings", icon: LayoutDashboard },
 ];
 
 export function AdminSidebar({ counts }: { counts?: Record<string, number> }) {

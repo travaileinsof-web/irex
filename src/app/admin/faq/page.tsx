@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminFaqPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/faq");
@@ -121,14 +120,14 @@ export default function AdminFaqPage() {
           <Field label="Question (FR)" required>
             <Input
               required
-              value={form.question || ""}
+              value={inputValue(form.question)}
               onChange={(e) => setForm({ ...form, question: e.target.value })}
             />
           </Field>
           <Field label="Question (EN)" >
             <Input
               
-              value={form.questionEn || ""}
+              value={inputValue(form.questionEn)}
               onChange={(e) => setForm({ ...form, questionEn: e.target.value })}
             />
           </Field>
@@ -136,7 +135,7 @@ export default function AdminFaqPage() {
             <Textarea
               required
               rows={3}
-              value={form.answer || ""}
+              value={inputValue(form.answer)}
               onChange={(e) => setForm({ ...form, answer: e.target.value })}
             />
           </Field>
@@ -144,14 +143,14 @@ export default function AdminFaqPage() {
             <Textarea
               
               rows={3}
-              value={form.answerEn || ""}
+              value={inputValue(form.answerEn)}
               onChange={(e) => setForm({ ...form, answerEn: e.target.value })}
             />
           </Field>
           <Field label="Category" >
             <Input
               
-              value={form.category || ""}
+              value={inputValue(form.category)}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
             />
           </Field>
@@ -159,7 +158,7 @@ export default function AdminFaqPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

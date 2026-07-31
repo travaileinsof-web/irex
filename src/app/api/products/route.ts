@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
@@ -23,9 +24,9 @@ export async function POST(request: NextRequest) {
   if (error) return error;
 
   try {
-    const body = await request.json();
+    const { category, id: _id, ...dataToCreate } = await request.json();
     const item = await db.product.create({
-      data: body,
+      data: dataToCreate,
       include: { category: true },
     });
     return NextResponse.json(item, { status: 201 });

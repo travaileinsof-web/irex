@@ -95,7 +95,8 @@ function Carousel({
 
   React.useEffect(() => {
     if (!api) return
-    onSelect(api)
+    // Defer to avoid a synchronous setState during the effect commit phase.
+    Promise.resolve().then(() => onSelect(api))
     api.on("reInit", onSelect)
     api.on("select", onSelect)
 

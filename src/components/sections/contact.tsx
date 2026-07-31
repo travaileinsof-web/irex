@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2, Linkedin, Facebook, Twitter, Instagram, Youtube, Link as LinkIcon } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
@@ -11,8 +11,9 @@ import { useFetch } from "@/hooks/use-fetch";
 interface ContactInfo {
   id: string;
   address: string;
-  phone: string;
-  email: string;
+  phones: string[];
+  emails: string[];
+  socials: { platform: string; url: string }[];
   hours: string;
   hoursEn: string | null;
   mapUrl: string | null;
@@ -53,17 +54,29 @@ export function Contact() {
   };
 
   const address = info?.address || c.info.address;
-  const phone = info?.phone || c.info.phone;
-  const email = info?.email || c.info.email;
+  const phones = info?.phones?.length ? info.phones : [c.info.phone];
+  const emails = info?.emails?.length ? info.emails : [c.info.email];
   const hours = info ? (lang === "fr" ? info.hours : (info.hoursEn || info.hours)) : c.info.hours;
   const mapUrl = info?.mapUrl || "https://www.google.com/maps?q=Matoto+Centre+Conakry+Guinea&output=embed";
 
   const infoItems = [
     { icon: MapPin, label: lang === "fr" ? "Adresse" : "Address", value: address },
-    { icon: Phone, label: lang === "fr" ? "Téléphone" : "Phone", value: phone },
-    { icon: Mail, label: "Email", value: email },
+    { icon: Phone, label: lang === "fr" ? (phones.length > 1 ? "Téléphones" : "Téléphone") : (phones.length > 1 ? "Phones" : "Phone"), value: phones.join("\n") },
+    { icon: Mail, label: emails.length > 1 ? "Emails" : "Email", value: emails.join("\n") },
     { icon: Clock, label: lang === "fr" ? "Horaires" : "Hours", value: hours },
   ];
+
+  const socials = info?.socials?.filter((s) => s?.url) ?? [];
+
+  const getSocialIcon = (platform: string) => {
+    const p = platform.toLowerCase();
+    if (p.includes("linkedin")) return <Linkedin className="h-4 w-4" />;
+    if (p.includes("facebook")) return <Facebook className="h-4 w-4" />;
+    if (p.includes("twitter") || p.includes("x")) return <Twitter className="h-4 w-4" />;
+    if (p.includes("instagram")) return <Instagram className="h-4 w-4" />;
+    if (p.includes("youtube")) return <Youtube className="h-4 w-4" />;
+    return <LinkIcon className="h-4 w-4" />;
+  };
 
   return (
     <section id="contact" className="relative bg-ivory py-32 overflow-hidden">
@@ -115,6 +128,29 @@ export function Contact() {
                   allowFullScreen
                 />
               </div>
+
+              {/* Social links */}
+              {socials.length > 0 && (
+                <div className="flex items-center gap-3 rounded-2xl border border-obsidian/10 bg-white p-5 shadow-sm">
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-emerald">
+                    {lang === "fr" ? "Suivez-nous" : "Follow us"}
+                  </span>
+                  <div className="flex gap-2">
+                    {socials.map((social, i) => (
+                      <a
+                        key={i}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={social.platform}
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-graphite/10 text-graphite hover:bg-gold hover:text-obsidian transition-colors"
+                      >
+                        {getSocialIcon(social.platform)}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </Reveal>
 

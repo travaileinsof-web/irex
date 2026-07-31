@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 type LogoProps = {
   className?: string;
   size?: number;
@@ -9,7 +11,7 @@ export function Logo({ className = "", size = 40, variant = "full" }: LogoProps)
     <img 
       src="/logo.png" 
       alt="IREX Mining logo" 
-      className={className} 
+      className={cn("brightness-0 invert drop-shadow-md", className)} 
       style={{ height: size, width: 'auto', objectFit: 'contain' }} 
     />
   );

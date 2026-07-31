@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminEventsPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/events");
@@ -127,14 +126,14 @@ export default function AdminEventsPage() {
           <Field label="Name (FR)" required>
             <Input
               required
-              value={form.name || ""}
+              value={inputValue(form.name)}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </Field>
           <Field label="Name (EN)" >
             <Input
               
-              value={form.nameEn || ""}
+              value={inputValue(form.nameEn)}
               onChange={(e) => setForm({ ...form, nameEn: e.target.value })}
             />
           </Field>
@@ -142,7 +141,7 @@ export default function AdminEventsPage() {
             <Textarea
               
               rows={3}
-              value={form.description || ""}
+              value={inputValue(form.description)}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
             />
           </Field>
@@ -150,28 +149,28 @@ export default function AdminEventsPage() {
             <Textarea
               
               rows={3}
-              value={form.descriptionEn || ""}
+              value={inputValue(form.descriptionEn)}
               onChange={(e) => setForm({ ...form, descriptionEn: e.target.value })}
             />
           </Field>
           <Field label="Date" required>
             <Input
               required
-              value={form.date || ""}
+              value={inputValue(form.date)}
               onChange={(e) => setForm({ ...form, date: e.target.value })}
             />
           </Field>
           <Field label="Location" required>
             <Input
               required
-              value={form.location || ""}
+              value={inputValue(form.location)}
               onChange={(e) => setForm({ ...form, location: e.target.value })}
             />
           </Field>
           <Field label="Type" required>
             <Select
               required
-              value={form.type || ""}
+              value={inputValue(form.type)}
               onChange={(e) => setForm({ ...form, type: e.target.value })}
             >
               <option value="">— Select —</option>
@@ -181,14 +180,14 @@ export default function AdminEventsPage() {
           <Field label="Image URL" >
             <Input
               
-              value={form.image || ""}
+              value={inputValue(form.image)}
               onChange={(e) => setForm({ ...form, image: e.target.value })}
             />
           </Field>
           <Field label="Register URL" >
             <Input
               
-              value={form.registerUrl || ""}
+              value={inputValue(form.registerUrl)}
               onChange={(e) => setForm({ ...form, registerUrl: e.target.value })}
             />
           </Field>
@@ -196,7 +195,7 @@ export default function AdminEventsPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

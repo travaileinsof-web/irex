@@ -5,19 +5,11 @@ import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { useFetch } from "@/hooks/use-fetch";
+import { EventModal, ApiEvent } from "@/components/site/event-modal";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface ApiEvent {
-  id: string;
-  name: string;
-  nameEn: string | null;
-  description: string | null;
-  descriptionEn: string | null;
-  date: string;
-  location: string;
-  type: string;
-  image: string | null;
-  registerUrl: string | null;
-}
+// ApiEvent is now imported from event-modal.tsx
 
 const typeColors: Record<string, string> = {
   "Sommet": "bg-gold/20 text-gold border-gold/40",
@@ -33,6 +25,8 @@ export function Events() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].events;
   const { data: items, loading } = useFetch<ApiEvent[]>("/api/events");
+  const [selectedEvent, setSelectedEvent] = useState<ApiEvent | null>(null);
+  const [expandedEvent, setExpandedEvent] = useState<string | null>(null);
 
   return (
     <section id="events" className="relative bg-cream py-32 overflow-hidden">
@@ -77,7 +71,10 @@ export function Events() {
                         <span className="relative h-2.5 w-2.5 rounded-full bg-gradient-to-br from-gold to-copper" />
                       </div>
                       <div className={`ml-12 md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}>
-                        <div className="group overflow-hidden rounded-2xl border border-obsidian/10 bg-white shadow-sm card-lift">
+                        <div 
+                          onClick={() => setExpandedEvent(expandedEvent === event.id ? null : event.id)}
+                          className="group overflow-hidden rounded-2xl border border-obsidian/10 bg-white shadow-sm card-lift cursor-pointer"
+                        >
                           {event.image && (
                             <div className="relative h-32 overflow-hidden">
                               <img
@@ -112,14 +109,48 @@ export function Events() {
                                 {event.location}
                               </div>
                             </div>
-                            {(event.registerUrl || true) && (
+                            {event.registerUrl ? (
                               <div className="mt-3 flex items-center gap-2 text-sm text-copper">
-                                <span className="link-underline">
+                                <a
+                                  href={event.registerUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="link-underline cursor-pointer flex items-center gap-1"
+                                >
                                   {lang === "fr" ? "S'inscrire" : "Register"}
-                                </span>
-                                <ArrowUpRight className="h-3.5 w-3.5" />
+                                  <ArrowUpRight className="h-3.5 w-3.5" />
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="mt-3 flex items-center gap-2 text-sm text-copper">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedEvent(event);
+                                  }}
+                                  className="link-underline cursor-pointer inline-flex items-center gap-1"
+                                >
+                                  {lang === "fr" ? "En savoir plus" : "Learn more"}
+                                  <ArrowUpRight className="h-3.5 w-3.3" />
+                                </button>
                               </div>
                             )}
+
+                            <AnimatePresence>
+                              {expandedEvent === event.id && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: "auto", opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="mt-4 pt-4 border-t border-obsidian/10 text-sm leading-relaxed text-graphite/80 whitespace-pre-wrap">
+                                    {desc}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
                           </div>
                         </div>
                       </div>
@@ -132,6 +163,11 @@ export function Events() {
           </div>
         )}
       </div>
+
+      <EventModal 
+        event={selectedEvent} 
+        onClose={() => setSelectedEvent(null)} 
+      />
     </section>
   );
 }

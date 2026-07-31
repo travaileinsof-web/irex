@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
@@ -22,8 +23,8 @@ export async function POST(request: NextRequest) {
   if (error) return error;
 
   try {
-    const body = await request.json();
-    const item = await db.category.create({ data: body });
+    const { id: _id, ...dataToCreate } = await request.json();
+    const item = await db.category.create({ data: dataToCreate });
     return NextResponse.json(item, { status: 201 });
   } catch (err) {
     console.error("Create categories error:", err);

@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminProjectsPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/projects");
@@ -127,14 +126,14 @@ export default function AdminProjectsPage() {
           <Field label="Name (FR)" required>
             <Input
               required
-              value={form.name || ""}
+              value={inputValue(form.name)}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </Field>
           <Field label="Name (EN)" >
             <Input
               
-              value={form.nameEn || ""}
+              value={inputValue(form.nameEn)}
               onChange={(e) => setForm({ ...form, nameEn: e.target.value })}
             />
           </Field>
@@ -142,7 +141,7 @@ export default function AdminProjectsPage() {
             <Textarea
               required
               rows={3}
-              value={form.description || ""}
+              value={inputValue(form.description)}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
             />
           </Field>
@@ -150,28 +149,28 @@ export default function AdminProjectsPage() {
             <Textarea
               
               rows={3}
-              value={form.descriptionEn || ""}
+              value={inputValue(form.descriptionEn)}
               onChange={(e) => setForm({ ...form, descriptionEn: e.target.value })}
             />
           </Field>
           <Field label="Sector" required>
             <Input
               required
-              value={form.sector || ""}
+              value={inputValue(form.sector)}
               onChange={(e) => setForm({ ...form, sector: e.target.value })}
             />
           </Field>
           <Field label="Year" required>
             <Input
               required
-              value={form.year || ""}
+              value={inputValue(form.year)}
               onChange={(e) => setForm({ ...form, year: e.target.value })}
             />
           </Field>
           <Field label="Status" required>
             <Select
               required
-              value={form.status || ""}
+              value={inputValue(form.status)}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
             >
               <option value="">— Select —</option>
@@ -181,21 +180,21 @@ export default function AdminProjectsPage() {
           <Field label="Client" >
             <Input
               
-              value={form.client || ""}
+              value={inputValue(form.client)}
               onChange={(e) => setForm({ ...form, client: e.target.value })}
             />
           </Field>
           <Field label="Location" >
             <Input
               
-              value={form.location || ""}
+              value={inputValue(form.location)}
               onChange={(e) => setForm({ ...form, location: e.target.value })}
             />
           </Field>
           <Field label="Image URL" >
             <Input
               
-              value={form.image || ""}
+              value={inputValue(form.image)}
               onChange={(e) => setForm({ ...form, image: e.target.value })}
             />
           </Field>
@@ -203,7 +202,7 @@ export default function AdminProjectsPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

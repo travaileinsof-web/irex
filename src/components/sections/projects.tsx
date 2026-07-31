@@ -6,25 +6,16 @@ import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { useFetch } from "@/hooks/use-fetch";
+import { ProjectModal, ApiProject } from "@/components/site/project-modal";
+import { useState } from "react";
 
-interface ApiProject {
-  id: string;
-  name: string;
-  nameEn: string | null;
-  description: string;
-  descriptionEn: string | null;
-  sector: string;
-  year: string;
-  status: string;
-  image: string | null;
-  client: string | null;
-  location: string | null;
-}
+// ApiProject is now imported from project-modal.tsx
 
 export function Projects() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].projects;
   const { data: items, loading } = useFetch<ApiProject[]>("/api/projects");
+  const [selectedProject, setSelectedProject] = useState<ApiProject | null>(null);
 
   return (
     <section id="projects" className="relative bg-obsidian py-32 overflow-hidden">
@@ -64,8 +55,9 @@ export function Projects() {
               return (
                 <Reveal key={p.id} delay={(i % 3) * 0.1}>
                   <article
+                    onClick={() => setSelectedProject(p)}
                     data-cursor="hover"
-                    className="group relative h-96 overflow-hidden rounded-2xl border border-gold/15 card-lift"
+                    className="group relative h-96 overflow-hidden rounded-2xl border border-gold/15 card-lift cursor-pointer"
                   >
                     {p.image && (
                       <img
@@ -131,6 +123,11 @@ export function Projects() {
           </div>
         )}
       </div>
+
+      <ProjectModal 
+        project={selectedProject} 
+        onClose={() => setSelectedProject(null)} 
+      />
     </section>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 
@@ -18,6 +18,7 @@ export function Chatbot() {
  const c = content[lang].chatbot;
  const [messages, setMessages] = useState<Message[]>([]);
  const [input, setInput] = useState("");
+ const [sending, setSending] = useState(false);
  const messagesEndRef = useRef<HTMLDivElement>(null);
 
  // Auto-scroll messages
@@ -33,13 +34,26 @@ export function Chatbot() {
  setChatbotOpen(!isChatbotOpen);
  };
 
- const send = (text: string) => {
- if (!text.trim()) return;
- setMessages((m) => [...m, { role: "user", text }]);
+ const send = async (text: string) => {
+ const trimmed = text.trim();
+ if (!trimmed || sending) return;
+ setMessages((m) => [...m, { role: "user", text: trimmed }]);
  setInput("");
- setTimeout(() => {
- setMessages((m) => [...m, { role: "bot", text: c.response }]);
- }, 800);
+ setSending(true);
+ try {
+   const res = await fetch("/api/chat", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({ messages: [...messages, { role: "user", content: trimmed }], lang }),
+   });
+   const data = await res.json();
+   const reply = data?.reply || c.response;
+   setMessages((m) => [...m, { role: "bot", text: reply }]);
+ } catch {
+   setMessages((m) => [...m, { role: "bot", text: c.response }]);
+ } finally {
+   setSending(false);
+ }
  };
 
  return (
@@ -164,16 +178,18 @@ export function Chatbot() {
  type="text"
  value={input}
  onChange={(e) => setInput(e.target.value)}
+ disabled={sending}
  placeholder={c.placeholder}
- className="flex-1 bg-transparent text-sm text-ivory placeholder:text-muted-foreground/50 focus:outline-none"
+ className="flex-1 bg-transparent text-sm text-ivory placeholder:text-muted-foreground/50 focus:outline-none disabled:opacity-50"
  />
  <button
  type="submit"
+ disabled={sending}
  data-cursor="hover"
- className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-gold to-copper text-obsidian transition-all hover:from-gold-bright hover:to-copper-light"
+ className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-gold to-copper text-obsidian transition-all hover:from-gold-bright hover:to-copper-light disabled:opacity-60"
  aria-label="Send"
  >
- <Send className="h-3.5 w-3.5" />
+ {sending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
  </button>
  </form>
  </div>

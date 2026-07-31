@@ -37,7 +37,7 @@ export const content = {
       cta: "Demander un Devis",
     },
     hero: {
-      badge: "Ingénierie Minière • République de Guinée",
+      badge: "Ingénierie Minière",
       title1: "L'Excellence",
       title2: "Minière",
       title3: "Façonnée pour l'Avenir",
@@ -55,7 +55,7 @@ export const content = {
     about: {
       tag: "À Propos d'IREX Mining",
       title: "Un partenaire stratégique de confiance pour le secteur minier",
-      lead: "Ingénierie de Recherche et d'Expertise Minière (IREX Mining) est une société créée pour promouvoir le développement durable et intégré à travers des services spécialisés en ingénierie, construction, recherche, expertise, consultation, investigation et formation professionnelle au profit des secteurs public, privé et mixte.",
+      lead: "IREX MINING SARL est une société créée pour promouvoir le développement durable et intégré à travers des services spécialisés en ingénierie, construction, recherche, expertise, consultation, investigation et formation professionnelle au profit des secteurs public, privé et mixte.",
       paragraphs: [
         "IREX Mining a pour vocation d'accompagner les organisations dans l'atteinte de leurs objectifs stratégiques et opérationnels en leur apportant des solutions innovantes, une expertise technique de haut niveau et un appui professionnel adapté à leurs besoins.",
         "À travers la mobilisation de compétences multidisciplinaires et le partage des meilleures pratiques, IREX Mining intervient notamment dans les domaines de l'ingénierie, de la construction, des mines, de l'environnement, de la santé et sécurité au travail, de la recherche et du développement des capacités.",
@@ -80,16 +80,56 @@ export const content = {
       tag: "Nos Expertises",
       title: "Des services intégrés pour toute la chaîne de valeur minière",
       subtitle:
-        "IREX Mining mobilise des compétences multidisciplinaires pour couvrir l'ensemble du cycle minier — de l'exploration à la formation.",
+        "IREX Mining mobilise des compétences multidisciplinaires pour couvrir l'ensemble du cycle minier — de l'exploration à la fermeture de la mine.",
       items: [
-        { icon: "compass", title: "Exploration & Recherche", desc: "Programmes d'exploration, investigations géologiques et évaluation de gisements avec les meilleures pratiques internationales." },
-        { icon: "hard-hat", title: "Ingénierie & Construction", desc: "Conception, dimensionnement et exécution de projets miniers et industriels de A à Z, avec un appui professionnel adapté." },
-        { icon: "pickaxe", title: "Exploitation Minière", desc: "Solutions d'exploitation optimisées, performantes et responsables, adaptées aux besoins de nos partenaires." },
-        { icon: "leaf", title: "Gestion Environnementale", desc: "Études d'impact, plans de gestion et surveillance environnementale pour une exploitation durable." },
-        { icon: "shield", title: "Santé & Sécurité (HSE)", desc: "Garantir les plus hauts standards en Santé, Sécurité et Environnement conformes aux normes les plus exigeantes." },
-        { icon: "truck", title: "Logistique & Maintenance", desc: "Optimisation logistique et maintenance industrielle pour des opérations performantes et continues." },
-        { icon: "graduation", title: "Renforcement des Capacités", desc: "Formation professionnelle et développement des compétences locales pour soutenir l'emploi national." },
-        { icon: "clipboard", title: "Consultation & Expertise", desc: "Conseil technique, audit et expertise de haut niveau pour sécuriser et valoriser vos investissements." },
+        { 
+          icon: "compass", 
+          title: "Exploration & Recherche", 
+          desc: "Programmes d'exploration, investigations géologiques et évaluation de gisements avec les meilleures pratiques internationales.",
+          features: ["Cartographie géologique détaillée", "Forage et échantillonnage de précision", "Modélisation 3D des gisements", "Études de faisabilité technique"]
+        },
+        { 
+          icon: "hard-hat", 
+          title: "Ingénierie & Construction", 
+          desc: "Conception, dimensionnement et exécution de projets miniers et industriels de A à Z, avec un appui professionnel adapté.",
+          features: ["Études d'ingénierie préliminaires", "Supervision des travaux de construction", "Gestion de projet EPC", "Mise en service et optimisation"]
+        },
+        { 
+          icon: "pickaxe", 
+          title: "Exploitation Minière", 
+          desc: "Solutions d'exploitation optimisées, performantes et responsables, adaptées aux besoins de nos partenaires.",
+          features: ["Planification de mine à ciel ouvert et souterraine", "Optimisation des opérations de forage et sautage", "Gestion des flottes d'équipements", "Suivi de la production en temps réel"]
+        },
+        { 
+          icon: "leaf", 
+          title: "Gestion Environnementale", 
+          desc: "Études d'impact, plans de gestion et surveillance environnementale pour une exploitation durable.",
+          features: ["Études d'impact environnemental et social (EIES)", "Gestion de l'eau et des rejets miniers", "Plans de réhabilitation et de fermeture", "Surveillance de la qualité de l'air et de l'eau"]
+        },
+        { 
+          icon: "shield", 
+          title: "Santé & Sécurité (HSE)", 
+          desc: "Garantir les plus hauts standards en Santé, Sécurité et Environnement conformes aux normes les plus exigeantes.",
+          features: ["Audits de conformité HSE", "Élaboration de plans de gestion des risques", "Formation aux premiers secours et sauvetage", "Enquêtes sur les incidents et analyses des causes"]
+        },
+        { 
+          icon: "truck", 
+          title: "Logistique & Maintenance", 
+          desc: "Optimisation logistique et maintenance industrielle pour des opérations performantes et continues.",
+          features: ["Gestion de la chaîne d'approvisionnement", "Maintenance prédictive et préventive", "Optimisation des flux de transport", "Gestion des stocks de pièces de rechange"]
+        },
+        { 
+          icon: "graduation", 
+          title: "Renforcement des Capacités", 
+          desc: "Formation professionnelle et développement des compétences locales pour soutenir l'emploi national.",
+          features: ["Programmes de formation sur mesure", "Transfert de compétences techniques", "Coaching et mentorat", "Évaluation des compétences et certifications"]
+        },
+        { 
+          icon: "clipboard", 
+          title: "Consultation & Expertise", 
+          desc: "Conseil technique, audit et expertise de haut niveau pour sécuriser et valoriser vos investissements.",
+          features: ["Due diligence technique et financière", "Audits opérationnels indépendants", "Assistance à la maîtrise d'ouvrage", "Conseils en stratégie de développement minier"]
+        },
       ],
     },
     products: {
@@ -159,7 +199,7 @@ export const content = {
       tag: "Témoignages",
       title: "La confiance de nos partenaires",
       items: [
-        { quote: "IREX Mining a transformé notre approche de la sécurité. Leur rigueur et leur expertise technique ont raised notre conformité HSE à un niveau inégalé.", author: "Directeur Opérations", company: "Société Minière, Guinée" },
+        { quote: "IREX Mining a transformé notre approche de la sécurité. Leur rigueur et leur expertise technique ont hissé notre conformité HSE à un niveau inégalé.", author: "Directeur Opérations", company: "Société Minière, Guinée" },
         { quote: "Un partenaire stratégique qui combine innovation technique et responsabilité sociale. Nos projets n'ont jamais été aussi performants.", author: "CEO", company: "Investisseur Minier, Afrique de l'Ouest" },
         { quote: "Le programme de formation a renforcé durablement les compétences de nos équipes locales. Un véritable transfert de savoir-faire.", author: "Responsable RH", company: "Groupe Industriel, Conakry" },
       ],
@@ -239,14 +279,14 @@ export const content = {
         success: "Merci ! Votre message a bien été envoyé. Nous vous répondrons sous 48h.",
       },
       info: {
-        address: "Matoto Centre, Commune Urbaine de Matoto\nConakry — République de Guinée",
+        address: "Matoto Centre, Commune Urbaine de Matoto\nConakry",
         phone: "626 68 32 32",
         email: "irexmine1@outlook.com",
         hours: "Lun – Ven : 08h00 — 18h00\nSam : 09h00 — 13h00",
       },
     },
     footer: {
-      tagline: "Ingénierie de Recherche et d'Expertise Minière",
+      tagline: "IREX MINING SARL",
       description: "Solutions d'ingénierie minière innovantes, durables et responsables pour le développement du secteur minier en Guinée et en Afrique de l'Ouest.",
       columns: {
         company: "Société",
@@ -298,7 +338,7 @@ export const content = {
       cta: "Request a Quote",
     },
     hero: {
-      badge: "Mining Engineering • Republic of Guinea",
+      badge: "Mining Engineering",
       title1: "Mining",
       title2: "Excellence",
       title3: "Shaped for the Future",
@@ -316,7 +356,7 @@ export const content = {
     about: {
       tag: "About IREX Mining",
       title: "A trusted strategic partner for the mining sector",
-      lead: "Ingénierie de Recherche et d'Expertise Minière (IREX Mining) was created to promote sustainable and integrated development through specialized services in engineering, construction, research, expertise, consulting, investigation and professional training for public, private and mixed sectors.",
+      lead: "IREX Mining Limited was created to promote sustainable and integrated development through specialized services in engineering, construction, research, expertise, consulting, investigation and professional training for public, private and mixed sectors.",
       paragraphs: [
         "IREX Mining supports organizations in achieving their strategic and operational goals by providing innovative solutions, high-level technical expertise and professional support tailored to their needs.",
         "Through the mobilization of multidisciplinary skills and the sharing of best practices, IREX Mining operates in engineering, construction, mining, environment, occupational health and safety, research and capacity building.",
@@ -331,7 +371,7 @@ export const content = {
         text: "Build a future where economic performance, innovation, social responsibility and environmental protection evolve together to create lasting value for our clients, partners and future generations.",
       },
       values: [
-        { title: "Operational Excellence", desc: "Best international practices serving performant and safe projects." },
+        { title: "Operational Excellence", desc: "Best international practices serving high-performing and safe projects." },
         { title: "Environmental Responsibility", desc: "Promoting sustainable exploitation of natural resources." },
         { title: "Integrity & Transparency", desc: "Lasting partnerships based on trust and performance." },
         { title: "Local Development", desc: "Strengthening local skills and fostering national employment." },
@@ -341,16 +381,56 @@ export const content = {
       tag: "Our Expertise",
       title: "Integrated services across the mining value chain",
       subtitle:
-        "IREX Mining mobilizes multidisciplinary skills to cover the entire mining cycle — from exploration to training.",
+        "IREX Mining mobilizes multidisciplinary skills to cover the entire mining cycle — from exploration to mine closure.",
       items: [
-        { icon: "compass", title: "Exploration & Research", desc: "Exploration programs, geological investigations and deposit evaluation with the best international practices." },
-        { icon: "hard-hat", title: "Engineering & Construction", desc: "Design, sizing and execution of mining and industrial projects end-to-end, with tailored professional support." },
-        { icon: "pickaxe", title: "Mining Operations", desc: "Optimized, performant and responsible mining solutions, tailored to our partners' needs." },
-        { icon: "leaf", title: "Environmental Management", desc: "Impact studies, management plans and environmental monitoring for sustainable operations." },
-        { icon: "shield", title: "Health & Safety (HSE)", desc: "Guaranteeing the highest Health, Safety and Environment standards compliant with the most demanding norms." },
-        { icon: "truck", title: "Logistics & Maintenance", desc: "Logistics optimization and industrial maintenance for performant and continuous operations." },
-        { icon: "graduation", title: "Capacity Building", desc: "Professional training and development of local skills to support national employment." },
-        { icon: "clipboard", title: "Consulting & Expertise", desc: "Technical advice, audit and high-level expertise to secure and valorize your investments." },
+        { 
+          icon: "compass", 
+          title: "Exploration & Research", 
+          desc: "Exploration programs, geological investigations and deposit evaluation with the best international practices.",
+          features: ["Detailed geological mapping", "Precision drilling and sampling", "3D deposit modeling", "Technical feasibility studies"]
+        },
+        { 
+          icon: "hard-hat", 
+          title: "Engineering & Construction", 
+          desc: "Design, sizing and execution of mining and industrial projects end-to-end, with tailored professional support.",
+          features: ["Preliminary engineering studies", "Construction supervision", "EPC project management", "Commissioning and optimization"]
+        },
+        { 
+          icon: "pickaxe", 
+          title: "Mining Operations", 
+          desc: "Optimized, high-performing and responsible mining solutions, tailored to our partners' needs.",
+          features: ["Open-pit and underground mine planning", "Drill and blast optimization", "Equipment fleet management", "Real-time production monitoring"]
+        },
+        { 
+          icon: "leaf", 
+          title: "Environmental Management", 
+          desc: "Impact studies, management plans and environmental monitoring for sustainable operations.",
+          features: ["Environmental and Social Impact Assessments (ESIA)", "Water and mine tailings management", "Rehabilitation and closure plans", "Air and water quality monitoring"]
+        },
+        { 
+          icon: "shield", 
+          title: "Health & Safety (HSE)", 
+          desc: "Guaranteeing the highest Health, Safety and Environment standards compliant with the most demanding norms.",
+          features: ["HSE compliance audits", "Risk management plan development", "First aid and rescue training", "Incident investigation and root cause analysis"]
+        },
+        { 
+          icon: "truck", 
+          title: "Logistics & Maintenance", 
+          desc: "Logistics optimization and industrial maintenance for efficient and continuous operations.",
+          features: ["Supply chain management", "Predictive and preventive maintenance", "Transport flow optimization", "Spare parts inventory management"]
+        },
+        { 
+          icon: "graduation", 
+          title: "Capacity Building", 
+          desc: "Professional training and development of local skills to support national employment.",
+          features: ["Tailored training programs", "Technical skills transfer", "Coaching and mentoring", "Skills assessment and certifications"]
+        },
+        { 
+          icon: "clipboard", 
+          title: "Consulting & Expertise", 
+          desc: "Technical advice, audit and high-level expertise to secure and valorize your investments.",
+          features: ["Technical and financial due diligence", "Independent operational audits", "Project management assistance", "Mining development strategy consulting"]
+        },
       ],
     },
     products: {
@@ -371,8 +451,8 @@ export const content = {
         { name: "Premium Mining PPE Kit", category: "HSE Solutions", price: 285000, badge: "Best-seller" },
         { name: "Industrial Centrifugal Pump", category: "Mining Equipment & Supplies", price: 4500000 },
         { name: "HSE Monitoring Software", category: "Digital Solutions", price: 1200000, badge: "New" },
-        { name: "SSE Training Module Level 1", category: "Documentation & Training", price: 350000 },
-        { name: "Water Treatment Station", category: "Environmental Solutions", price: 18500000 },
+        { name: "HSE Training Module Level 1", category: "Documentation & Training", price: 350000 },
+        { name: "Water Treatment Plant", category: "Environmental Solutions", price: 18500000 },
         { name: "Heavy Maintenance Tooling", category: "Industrial Maintenance", price: 920000 },
         { name: "Custom Energy Audit", category: "Custom Solutions", price: 3500000, badge: "Made-to-measure" },
         { name: "Portable Multi-Gas Detector", category: "HSE Solutions", price: 680000 },
@@ -421,7 +501,7 @@ export const content = {
       title: "Our partners' trust",
       items: [
         { quote: "IREX Mining transformed our safety approach. Their rigor and technical expertise took our HSE compliance to an unprecedented level.", author: "Operations Director", company: "Mining Company, Guinea" },
-        { quote: "A strategic partner combining technical innovation and social responsibility. Our projects have never been so performant.", author: "CEO", company: "Mining Investor, West Africa" },
+        { quote: "A strategic partner combining technical innovation and social responsibility. Our projects have never been so successful.", author: "CEO", company: "Mining Investor, West Africa" },
         { quote: "The training program durably strengthened the skills of our local teams. A true know-how transfer.", author: "HR Manager", company: "Industrial Group, Conakry" },
       ],
     },
@@ -500,14 +580,14 @@ export const content = {
         success: "Thank you! Your message has been sent. We will respond within 48h.",
       },
       info: {
-        address: "Matoto Centre, Commune Urbaine de Matoto\nConakry — Republic of Guinea",
+        address: "Matoto Centre, Commune Urbaine de Matoto\nConakry",
         phone: "626 68 32 32",
         email: "irexmine1@outlook.com",
         hours: "Mon – Fri: 8:00 AM — 6:00 PM\nSat: 9:00 AM — 1:00 PM",
       },
     },
     footer: {
-      tagline: "Ingénierie de Recherche et d'Expertise Minière",
+      tagline: "IREX Mining Limited",
       description: "Innovative, sustainable and responsible mining engineering solutions for the development of the mining sector in Guinea and West Africa.",
       columns: {
         company: "Company",

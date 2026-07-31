@@ -22,7 +22,8 @@ export function useCrud<T extends { id: string }>(endpoint: string) {
   const fetchItems = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      const res = await fetch(endpoint);
+      const url = endpoint.includes("?") ? `${endpoint}&t=${Date.now()}` : `${endpoint}?t=${Date.now()}`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch");
       const items = await res.json();
       setState({ items, loading: false, error: null });
@@ -32,7 +33,24 @@ export function useCrud<T extends { id: string }>(endpoint: string) {
   }, [endpoint]);
 
   useEffect(() => {
-    fetchItems();
+    // Defer to avoid a synchronous setState during the effect commit phase.
+    Promise.resolve().then(() => fetchItems());
+  }, [fetchItems]);
+
+  // Re-fetch silently when the window regains focus, so the dashboard stays
+  // in sync with changes made elsewhere (e.g. the public site or another tab).
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") {
+        fetchItems();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("focus", onVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("focus", onVisibility);
+    };
   }, [fetchItems]);
 
   const create = async (data: Partial<T>): Promise<T | null> => {

@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminDonationsPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/donations");
@@ -124,21 +123,21 @@ export default function AdminDonationsPage() {
             <Input
               type="number"
               required
-              value={form.amount || 0}
+              value={inputValue(form.amount)}
               onChange={(e) => setForm({ ...form, amount: parseInt(e.target.value) || 0 })}
             />
           </Field>
           <Field label="Title (FR)" >
             <Input
               
-              value={form.title || ""}
+              value={inputValue(form.title)}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
             />
           </Field>
           <Field label="Title (EN)" >
             <Input
               
-              value={form.titleEn || ""}
+              value={inputValue(form.titleEn)}
               onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
             />
           </Field>
@@ -146,7 +145,7 @@ export default function AdminDonationsPage() {
             <Textarea
               required
               rows={3}
-              value={form.perks || ""}
+              value={inputValue(form.perks)}
               onChange={(e) => setForm({ ...form, perks: e.target.value })}
             />
           </Field>
@@ -154,7 +153,7 @@ export default function AdminDonationsPage() {
             <Textarea
               
               rows={3}
-              value={form.perksEn || ""}
+              value={inputValue(form.perksEn)}
               onChange={(e) => setForm({ ...form, perksEn: e.target.value })}
             />
           </Field>
@@ -162,7 +161,7 @@ export default function AdminDonationsPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

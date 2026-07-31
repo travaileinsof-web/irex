@@ -1,6 +1,7 @@
 "use client";
 
-import { Linkedin, Twitter, ArrowUpRight, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Linkedin, Twitter, Mail, ArrowUpRight, Loader2 } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
@@ -13,15 +14,19 @@ interface ApiTeamMember {
   roleEn: string | null;
   expertise: string;
   expertiseEn: string | null;
+  bio: string | null;
+  bioEn: string | null;
   photo: string | null;
   linkedin: string | null;
   twitter: string | null;
+  email: string | null;
 }
 
 export function Team() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].team;
   const { data: items, loading } = useFetch<ApiTeamMember[]>("/api/team");
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
     <section id="team" className="relative bg-ivory py-32 overflow-hidden">
@@ -56,6 +61,7 @@ export function Team() {
             {(items || []).map((m, i) => {
               const role = lang === "fr" ? m.role : (m.roleEn || m.role);
               const expertise = lang === "fr" ? m.expertise : (m.expertiseEn || m.expertise);
+              const bio = lang === "fr" ? m.bio : (m.bioEn || m.bio);
               return (
                 <Reveal key={m.id} delay={(i % 3) * 0.08}>
                   <article className="group relative overflow-hidden rounded-2xl border border-obsidian/10 bg-white shadow-sm card-lift">
@@ -87,15 +93,33 @@ export function Team() {
                             <Twitter className="h-4 w-4" />
                           </a>
                         )}
+                        {m.email && (
+                          <a href={`mailto:${m.email}`} className="flex h-9 w-9 items-center justify-center rounded-full bg-ivory/90 text-obsidian hover:bg-gold transition-colors">
+                            <Mail className="h-4 w-4" />
+                          </a>
+                        )}
                       </div>
                     </div>
                     <div className="p-6">
                       <div className="text-[10px] uppercase tracking-[0.2em] text-emerald font-medium">{role}</div>
                       <h3 className="mt-2 font-display text-xl font-bold text-obsidian">{m.name}</h3>
-                      <div className="mt-3 flex items-center justify-between">
-                        <p className="text-xs text-graphite/70">{expertise}</p>
-                        <ArrowUpRight className="h-4 w-4 text-graphite/40 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-copper" />
-                      </div>
+                      <p className="mt-2 text-xs text-graphite/70">{expertise}</p>
+                      {bio && (
+                        <p className={`mt-3 text-xs leading-relaxed text-graphite/70 ${expanded === m.id ? "" : "line-clamp-2"}`}>
+                          {bio}
+                        </p>
+                      )}
+                      {bio && bio.length > 100 && (
+                        <button
+                          onClick={() => setExpanded(expanded === m.id ? null : m.id)}
+                          className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-copper hover:text-gold transition-colors"
+                        >
+                          {expanded === m.id
+                            ? (lang === "fr" ? "Réduire" : "Show less")
+                            : (lang === "fr" ? "Lire plus" : "Read more")}
+                          <ArrowUpRight className={`h-3 w-3 transition-transform ${expanded === m.id ? "rotate-90" : ""}`} />
+                        </button>
+                      )}
                     </div>
                     <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-gold to-emerald transition-all duration-500 group-hover:w-full" />
                   </article>

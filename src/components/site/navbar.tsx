@@ -35,6 +35,7 @@ export function Navbar() {
  const setLang = useSiteStore((s) => s.setLang);
  const setSection = useSiteStore((s) => s.setSection);
  const setMenuOpen = useSiteStore((s) => s.setMenuOpen);
+ const visibleSections = useSiteStore((s) => s.visibleSections);
  const c = content[lang];
 
  useEffect(() => {
@@ -51,6 +52,15 @@ export function Navbar() {
  window.scrollTo({ top: 0, behavior: "smooth" });
  };
 
+ const isVisible = (id: Section) => {
+   if (["home", "about", "services", "contact"].includes(id)) return true;
+   return visibleSections[id] !== false;
+ };
+
+ const visibleNavSections = SECTIONS.filter(s => isVisible(s.id));
+ const mainNav = visibleNavSections.slice(0, 7);
+ const moreNav = visibleNavSections.slice(7);
+
  return (
  <>
  <motion.header
@@ -61,7 +71,7 @@ export function Navbar() {
  "fixed left-0 right-0 top-0 z-[100] transition-all duration-500",
  scrolled || isMenuOpen
  ? "glass-strong py-3 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.6)]"
- : "py-5 bg-transparent"
+ : "py-5 bg-gradient-to-b from-black/80 via-black/40 to-transparent"
  )}
  >
  <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 lg:px-10">
@@ -72,18 +82,18 @@ export function Navbar() {
  data-cursor="hover"
  aria-label="IREX Mining — Home"
  >
- <Logo size={38} />
+ <Logo size={50} />
  </button>
 
  {/* Desktop nav */}
  <nav className="hidden lg:flex items-center gap-1">
- {SECTIONS.slice(0, 7).map((s) => (
+ {mainNav.map((s) => (
  <button
  key={s.id}
  onClick={() => go(s.id)}
  data-cursor="hover"
  className={cn(
- "relative px-4 py-2 text-sm font-medium transition-colors duration-300",
+ "relative px-4 py-2 text-sm font-medium transition-colors duration-300 drop-shadow-md",
  section === s.id
  ? "text-gold"
  : "text-ivory/70 hover:text-ivory"
@@ -98,16 +108,17 @@ export function Navbar() {
  </button>
  ))}
  {/* More menu */}
+ {moreNav.length > 0 && (
  <div className="group relative">
  <button
  data-cursor="hover"
- className="px-4 py-2 text-sm font-medium text-ivory/70 hover:text-ivory transition-colors"
+ className="px-4 py-2 text-sm font-medium text-ivory/70 hover:text-ivory transition-colors drop-shadow-md"
  >
  +
  </button>
  <div className="invisible absolute right-0 top-full pt-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0">
  <div className="glass-strong rounded-2xl p-2 min-w-[200px]">
- {SECTIONS.slice(7).map((s) => (
+ {moreNav.map((s) => (
  <button
  key={s.id}
  onClick={() => go(s.id)}
@@ -124,6 +135,7 @@ export function Navbar() {
  </div>
  </div>
  </div>
+ )}
  </nav>
 
  {/* Right actions */}
@@ -132,7 +144,7 @@ export function Navbar() {
  <button
  onClick={toggleLang}
  data-cursor="hover"
- className="group flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ivory/80 hover:border-gold/40 hover:text-gold transition-colors"
+ className="group flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ivory/80 hover:border-gold/40 hover:text-gold transition-colors drop-shadow-md bg-black/20"
  >
  <Globe className="h-3.5 w-3.5" />
  <span className="uppercase tracking-wider">{lang}</span>
@@ -156,7 +168,7 @@ export function Navbar() {
  <button
  onClick={() => setMenuOpen(!isMenuOpen)}
  data-cursor="hover"
- className="lg:hidden p-2 text-ivory"
+ className="lg:hidden p-2 text-ivory drop-shadow-md"
  aria-label="Menu"
  >
  {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -184,7 +196,7 @@ export function Navbar() {
  className="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-coal p-8 pt-24"
  >
  <div className="flex flex-col gap-1">
- {SECTIONS.map((s, i) => (
+ {visibleNavSections.map((s, i) => (
  <motion.button
  key={s.id}
  onClick={() => go(s.id)}

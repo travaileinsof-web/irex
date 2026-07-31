@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/auth";
@@ -30,10 +31,10 @@ export async function PUT(
 
   try {
     const { id } = await params;
-    const body = await request.json();
+    const { category, id: _id, ...dataToUpdate } = await request.json();
     const item = await db.product.update({
       where: { id },
-      data: body,
+      data: dataToUpdate,
       include: { category: true },
     });
     return NextResponse.json(item);

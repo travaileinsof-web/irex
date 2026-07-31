@@ -1,6 +1,5 @@
 // IREX Mining — Complete Prisma schema
-// Compatible with SQLite (dev) and PostgreSQL (Neon production)
-// For production: change provider to "postgresql" and update DATABASE_URL
+// Production: PostgreSQL (Neon). Provider matches DATABASE_URL.
 
 generator client {
   provider = "prisma-client-js"
@@ -259,8 +258,9 @@ model Partner {
 model ContactInfo {
   id          String   @id @default(cuid())
   address     String
-  phone       String
-  email       String
+  phones      String   @default("[]")
+  emails      String   @default("[]")
+  socials     String   @default("[]")
   hours       String
   hoursEn     String?
   mapUrl      String?  // Google Maps embed URL
@@ -285,4 +285,27 @@ model Submission {
   status      String   @default("new") // new | read | handled
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// SETTINGS — Global site settings (like page visibility)
+// ============================================
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================
+// NEWSLETTER — Email subscriptions from footer
+// ============================================
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  lang      String   @default("fr") // "fr" | "en"
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
 }

@@ -22,10 +22,22 @@ function AdminLayoutInner({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!user) return;
-    fetch("/api/dashboard/stats")
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => data && setCounts(data))
-      .catch(() => {});
+    const load = () => {
+      fetch("/api/dashboard/stats")
+        .then((r) => r.ok ? r.json() : null)
+        .then((data) => data && setCounts(data))
+        .catch(() => {});
+    };
+    load();
+    // Refresh counts when the window regains focus (e.g. after returning from
+    // the public site) so the sidebar badges stay accurate.
+    const onFocus = () => load();
+    document.addEventListener("visibilitychange", onFocus);
+    window.addEventListener("focus", onFocus);
+    return () => {
+      document.removeEventListener("visibilitychange", onFocus);
+      window.removeEventListener("focus", onFocus);
+    };
   }, [user]);
 
   // Login route: no sidebar, no auth required

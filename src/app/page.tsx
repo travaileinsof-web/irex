@@ -32,12 +32,31 @@ import { CtaBanner } from "@/components/sections/cta-banner";
 
 export default function Home() {
   const section = useSiteStore((s) => s.section);
+  const visibleSections = useSiteStore((s) => s.visibleSections);
+  const setVisibleSections = useSiteStore((s) => s.setVisibleSections);
   const [selectedProduct, setSelectedProduct] = useState<ApiProduct | null>(null);
+
+  // Fetch visibility settings
+  useEffect(() => {
+    fetch(`/api/settings?t=${Date.now()}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && typeof data === "object" && !("error" in data)) {
+          setVisibleSections(data as Record<string, boolean>);
+        }
+      })
+      .catch(() => {});
+  }, [setVisibleSections]);
 
   // Scroll to top on section change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [section]);
+
+  const isVisible = (id: string) => {
+    if (["home", "about", "services", "contact"].includes(id)) return true;
+    return visibleSections[id] !== false;
+  };
 
   return (
     <>
@@ -52,18 +71,18 @@ export default function Home() {
           {section === "home" && (
             <>
               <Hero />
-              <Partners />
+              {isVisible("partners") && <Partners />}
               <About />
               <Services />
               <Stats />
-              <Products onSelectProduct={setSelectedProduct} />
-              <Projects />
+              {isVisible("products") && <Products onSelectProduct={setSelectedProduct} />}
+              {isVisible("projects") && <Projects />}
               <Testimonials />
-              <Team />
-              <Blog />
-              <Events />
+              {isVisible("team") && <Team />}
+              {isVisible("blog") && <Blog />}
+              {isVisible("events") && <Events />}
               <CtaBanner />
-              <FAQ />
+              {isVisible("faq") && <FAQ />}
               <Contact />
             </>
           )}
@@ -71,28 +90,28 @@ export default function Home() {
             <>
               <About />
               <Stats />
-              <Team />
-              <Partners />
+              {isVisible("team") && <Team />}
+              {isVisible("partners") && <Partners />}
             </>
           )}
           {section === "services" && (
             <>
               <div className="pt-20" />
               <Services />
-              <Products onSelectProduct={setSelectedProduct} />
-              <Projects />
+              {isVisible("products") && <Products onSelectProduct={setSelectedProduct} />}
+              {isVisible("projects") && <Projects />}
               <CtaBanner />
             </>
           )}
-          {section === "products" && (
+          {section === "products" && isVisible("products") && (
             <>
               <div className="pt-20" />
               <Products onSelectProduct={setSelectedProduct} />
               <CtaBanner />
-              <FAQ />
+              {isVisible("faq") && <FAQ />}
             </>
           )}
-          {section === "projects" && (
+          {section === "projects" && isVisible("projects") && (
             <>
               <div className="pt-20" />
               <Projects />
@@ -100,43 +119,43 @@ export default function Home() {
               <Testimonials />
             </>
           )}
-          {section === "team" && (
+          {section === "team" && isVisible("team") && (
             <>
               <div className="pt-20" />
               <Team />
-              <Partners />
-              <Careers />
+              {isVisible("partners") && <Partners />}
+              {isVisible("careers") && <Careers />}
             </>
           )}
-          {section === "blog" && (
+          {section === "blog" && isVisible("blog") && (
             <>
               <div className="pt-20" />
               <Blog />
-              <Events />
+              {isVisible("events") && <Events />}
             </>
           )}
-          {section === "events" && (
+          {section === "events" && isVisible("events") && (
             <>
               <div className="pt-20" />
               <Events />
-              <Blog />
+              {isVisible("blog") && <Blog />}
             </>
           )}
-          {section === "careers" && (
+          {section === "careers" && isVisible("careers") && (
             <>
               <div className="pt-20" />
               <Careers />
               <CtaBanner />
             </>
           )}
-          {section === "donations" && (
+          {section === "donations" && isVisible("donations") && (
             <>
               <div className="pt-20" />
               <Donations />
               <Testimonials />
             </>
           )}
-          {section === "faq" && (
+          {section === "faq" && isVisible("faq") && (
             <>
               <div className="pt-20" />
               <FAQ />

@@ -53,7 +53,8 @@ export default function AdminSubmissionsPage() {
   };
 
   useEffect(() => {
-    fetchItems();
+    // Defer to avoid a synchronous setState during the effect commit phase.
+    Promise.resolve().then(() => fetchItems());
   }, []);
 
   const updateStatus = async (id: string, status: string) => {

@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowUpRight, MapPin, Briefcase, Send, Sparkles, Loader2 } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { useFetch } from "@/hooks/use-fetch";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ApiJobOpening {
   id: string;
@@ -21,6 +23,7 @@ export function Careers() {
   const lang = useSiteStore((s) => s.lang);
   const c = content[lang].careers;
   const { data: items, loading } = useFetch<ApiJobOpening[]>("/api/careers");
+  const [expandedJob, setExpandedJob] = useState<string | null>(null);
 
   return (
     <section id="careers" className="relative bg-coal py-32 overflow-hidden">
@@ -59,6 +62,7 @@ export function Careers() {
               return (
                 <Reveal key={job.id} delay={i * 0.06}>
                   <button
+                    onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
                     data-cursor="hover"
                     className="group flex w-full flex-col gap-4 rounded-2xl border border-gold/15 bg-gradient-to-r from-graphite to-coal p-6 text-left transition-colors hover:border-gold/40 hover-lift-xs"
                   >
@@ -84,11 +88,26 @@ export function Careers() {
                       <span className="rounded-full border border-ivory/20 px-3 py-1 text-[10px] uppercase tracking-wider text-ivory">
                         {job.type}
                       </span>
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory transition-all group-hover:border-gold group-hover:bg-gold group-hover:text-obsidian">
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory transition-all group-hover:border-gold group-hover:bg-gold group-hover:text-obsidian ${expandedJob === job.id ? 'bg-gold text-obsidian border-gold rotate-45' : ''}`}>
                         <ArrowUpRight className="h-4 w-4" />
                       </div>
                     </div>
                   </button>
+
+                  <AnimatePresence>
+                    {expandedJob === job.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-2 rounded-2xl border border-gold/10 bg-obsidian/40 p-6 text-sm leading-relaxed text-ivory/80 whitespace-pre-wrap">
+                          {desc}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </Reveal>
               );
             })}

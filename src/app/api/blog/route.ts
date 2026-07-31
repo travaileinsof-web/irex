@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const where = (all || includeUnpublished) ? {} : { published: true };
   const items = await db.blogPost.findMany({
     where,
-    orderBy: { order: "asc" },
+    orderBy: { publishedAt: "desc" },
   });
   return NextResponse.json(items);
 }

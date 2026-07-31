@@ -157,9 +157,9 @@ export function ProductInquiryModal({ product, onClose }: Props) {
                     <h2 className="mt-1 font-display text-2xl font-bold text-obsidian">
                       {productName}
                     </h2>
-                    <p className="mt-2 text-sm text-graphite/70 line-clamp-3">
+                    <div className="mt-4 prose prose-sm max-w-none text-graphite/80 leading-relaxed whitespace-pre-wrap">
                       {productDesc}
-                    </p>
+                    </div>
 
                     <div className="my-5 h-px bg-obsidian/10" />
 

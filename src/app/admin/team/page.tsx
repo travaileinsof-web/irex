@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminTeamPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/team");
@@ -125,35 +124,35 @@ export default function AdminTeamPage() {
           <Field label="Name" required>
             <Input
               required
-              value={form.name || ""}
+              value={inputValue(form.name)}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </Field>
           <Field label="Role (FR)" required>
             <Input
               required
-              value={form.role || ""}
+              value={inputValue(form.role)}
               onChange={(e) => setForm({ ...form, role: e.target.value })}
             />
           </Field>
           <Field label="Role (EN)" >
             <Input
               
-              value={form.roleEn || ""}
+              value={inputValue(form.roleEn)}
               onChange={(e) => setForm({ ...form, roleEn: e.target.value })}
             />
           </Field>
           <Field label="Expertise (FR)" required>
             <Input
               required
-              value={form.expertise || ""}
+              value={inputValue(form.expertise)}
               onChange={(e) => setForm({ ...form, expertise: e.target.value })}
             />
           </Field>
           <Field label="Expertise (EN)" >
             <Input
               
-              value={form.expertiseEn || ""}
+              value={inputValue(form.expertiseEn)}
               onChange={(e) => setForm({ ...form, expertiseEn: e.target.value })}
             />
           </Field>
@@ -161,7 +160,7 @@ export default function AdminTeamPage() {
             <Textarea
               
               rows={3}
-              value={form.bio || ""}
+              value={inputValue(form.bio)}
               onChange={(e) => setForm({ ...form, bio: e.target.value })}
             />
           </Field>
@@ -169,35 +168,35 @@ export default function AdminTeamPage() {
             <Textarea
               
               rows={3}
-              value={form.bioEn || ""}
+              value={inputValue(form.bioEn)}
               onChange={(e) => setForm({ ...form, bioEn: e.target.value })}
             />
           </Field>
           <Field label="Photo URL" >
             <Input
               
-              value={form.photo || ""}
+              value={inputValue(form.photo)}
               onChange={(e) => setForm({ ...form, photo: e.target.value })}
             />
           </Field>
           <Field label="LinkedIn URL" >
             <Input
               
-              value={form.linkedin || ""}
+              value={inputValue(form.linkedin)}
               onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
             />
           </Field>
           <Field label="Twitter URL" >
             <Input
               
-              value={form.twitter || ""}
+              value={inputValue(form.twitter)}
               onChange={(e) => setForm({ ...form, twitter: e.target.value })}
             />
           </Field>
           <Field label="Email" >
             <Input
               
-              value={form.email || ""}
+              value={inputValue(form.email)}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </Field>
@@ -205,7 +204,7 @@ export default function AdminTeamPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

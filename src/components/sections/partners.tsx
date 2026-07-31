@@ -36,12 +36,8 @@ export function Partners() {
         <div className="flex w-max animate-marquee items-center gap-16 py-6">
           {marqueeItems.map((name, i) => {
             const partner = (items || []).find(p => p.name === name);
-            return (
-              <div
-                key={i}
-                className="group flex items-center gap-3 opacity-60 transition-all duration-500 hover:opacity-100"
-                data-cursor="hover"
-              >
+            const content = (
+              <>
                 {partner?.logo ? (
                   <img src={partner.logo} alt={name} className="h-8 w-auto object-contain" />
                 ) : (
@@ -56,6 +52,27 @@ export function Partners() {
                     </span>
                   </>
                 )}
+              </>
+            );
+            return partner?.website ? (
+              <a
+                key={i}
+                href={partner.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 opacity-60 transition-all duration-500 hover:opacity-100"
+                data-cursor="hover"
+                title={`${name} — ${partner.website.replace(/^https?:\/\//, "")}`}
+              >
+                {content}
+              </a>
+            ) : (
+              <div
+                key={i}
+                className="group flex items-center gap-3 opacity-60 transition-all duration-500 hover:opacity-100"
+                data-cursor="hover"
+              >
+                {content}
               </div>
             );
           })}

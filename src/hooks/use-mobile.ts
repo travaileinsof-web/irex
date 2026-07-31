@@ -11,7 +11,8 @@ export function useIsMobile() {
       setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
     }
     mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+    // Defer to avoid a synchronous setState during the effect commit phase.
+    Promise.resolve().then(() => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT))
     return () => mql.removeEventListener("change", onChange)
   }, [])
 

@@ -1,6 +1,6 @@
 # IREX Mining — Website + Admin Dashboard
 
-Premium bilingual (FR/EN) corporate website for IREX Mining (Ingénierie de Recherche et d'Expertise Minière) with a complete admin dashboard for real-time content management.
+Premium bilingual (FR/EN) corporate website for IREX MINING SARL with a complete admin dashboard for real-time content management.
 
 ## Tech Stack
 

@@ -4,11 +4,10 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { Entity, inputValue } from "@/types/entity";
 
-interface Item {
-  id: string;
-  [key: string]: unknown;
-}
+type Item = Entity;
+
 
 export default function AdminPartnersPage() {
   const { items, loading, create, update, remove } = useCrud<Item>("/api/partners");
@@ -121,21 +120,21 @@ export default function AdminPartnersPage() {
           <Field label="Name" required>
             <Input
               required
-              value={form.name || ""}
+              value={inputValue(form.name)}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </Field>
           <Field label="Logo URL" >
             <Input
               
-              value={form.logo || ""}
+              value={inputValue(form.logo)}
               onChange={(e) => setForm({ ...form, logo: e.target.value })}
             />
           </Field>
           <Field label="Website URL" >
             <Input
               
-              value={form.website || ""}
+              value={inputValue(form.website)}
               onChange={(e) => setForm({ ...form, website: e.target.value })}
             />
           </Field>
@@ -143,7 +142,7 @@ export default function AdminPartnersPage() {
             <Input
               type="number"
               
-              value={form.order || 0}
+              value={inputValue(form.order)}
               onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
             />
           </Field>

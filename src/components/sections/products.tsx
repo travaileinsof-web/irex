@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ShoppingCart, ArrowUpRight, Loader2 } from "lucide-react";
+import { ShoppingCart, ArrowUpRight, Loader2, Star } from "lucide-react";
 import { useSiteStore } from "@/lib/store";
 import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
@@ -18,6 +18,7 @@ interface ApiProduct {
   badge: string | null;
   image: string | null;
   type: string;
+  featured: boolean;
   categoryId: string;
   category?: { id: string; name: string; nameEn: string | null };
 }
@@ -38,9 +39,7 @@ export function Products({ onSelectProduct }: { onSelectProduct?: (p: ApiProduct
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
 
   const { data: categories, loading: catLoading } = useFetch<ApiCategory[]>("/api/categories");
-  const productsUrl = activeCategoryId
-    ? `/api/products?all=true`
-    : `/api/products?all=true`;
+  const productsUrl = "/api/products?all=true";
   const { data: allProducts, loading: prodLoading } = useFetch<ApiProduct[]>(productsUrl);
 
   const products = (allProducts || []).filter(
@@ -148,6 +147,16 @@ export function Products({ onSelectProduct }: { onSelectProduct?: (p: ApiProduct
                     {item.badge && (
                       <div className="absolute left-3 top-3 rounded-full bg-gradient-to-r from-gold to-copper px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-obsidian shadow-lg">
                         {item.badge}
+                      </div>
+                    )}
+                    {/* Featured star */}
+                    {item.featured && (
+                      <div
+                        className={`absolute ${item.badge ? "left-3 top-11" : "left-3 top-3"} flex items-center gap-1 rounded-full bg-obsidian/80 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold backdrop-blur-md`}
+                        title={lang === "fr" ? "Coup de cœur" : "Featured"}
+                      >
+                        <Star className="h-2.5 w-2.5 fill-current" />
+                        {lang === "fr" ? "Coup de cœur" : "Featured"}
                       </div>
                     )}
                     {/* Click indicator */}

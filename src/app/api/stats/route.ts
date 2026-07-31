@@ -8,9 +8,8 @@ export async function GET(request: NextRequest) {
   const all = searchParams.get("all") === "true";
   const includeUnpublished = searchParams.get("includeUnpublished") === "true";
 
-  const where = (all || includeUnpublished) ? {} : { published: true };
+  // SiteStat has no `published` flag — all stats are returned.
   const items = await db.siteStat.findMany({
-    where,
     orderBy: { order: "asc" },
   });
   return NextResponse.json(items);

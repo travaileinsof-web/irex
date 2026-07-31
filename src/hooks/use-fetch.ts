@@ -8,10 +8,23 @@ interface FetchState<T> {
   error: string | null;
 }
 
+interface UseFetchOptions {
+  /** Re-fetch when the window regains focus (default: true) */
+  refetchOnFocus?: boolean;
+}
+
 /**
- * Simple fetch hook for client-side data fetching
+ * Simple fetch hook for client-side data fetching.
+ *
+ * By default it re-fetches when the browser tab/window regains focus. This
+ * keeps the public site and the admin dashboard in sync after content changes,
+ * without needing WebSockets or polling.
  */
-export function useFetch<T>(url: string | null): FetchState<T> & { refetch: () => void } {
+export function useFetch<T>(
+  url: string | null,
+  options: UseFetchOptions = {}
+): FetchState<T> & { refetch: () => void } {
+  const { refetchOnFocus = true } = options;
   const [state, setState] = useState<FetchState<T>>({
     data: null,
     loading: url !== null,
@@ -19,6 +32,7 @@ export function useFetch<T>(url: string | null): FetchState<T> & { refetch: () =
   });
   const [refetchCount, setRefetchCount] = useState(0);
   const currentUrl = useRef<string | null>(url);
+  const hasLoadedOnce = useRef(false);
 
   useEffect(() => {
     currentUrl.current = url;
@@ -38,7 +52,10 @@ export function useFetch<T>(url: string | null): FetchState<T> & { refetch: () =
         return res.json();
       })
       .then((data) => {
-        if (!cancelled) setState({ data, loading: false, error: null });
+        if (!cancelled) {
+          setState({ data, loading: false, error: null });
+          hasLoadedOnce.current = true;
+        }
       })
       .catch((error) => {
         if (!cancelled) setState({ data: null, loading: false, error: error.message });
@@ -48,6 +65,22 @@ export function useFetch<T>(url: string | null): FetchState<T> & { refetch: () =
       cancelled = true;
     };
   }, [url, refetchCount]);
+
+  // Re-fetch silently when the tab/window regains focus (only after the first load)
+  useEffect(() => {
+    if (!url || !refetchOnFocus) return;
+    const onVisibility = () => {
+      if (document.visibilityState === "visible" && hasLoadedOnce.current) {
+        setRefetchCount((c) => c + 1);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("focus", onVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("focus", onVisibility);
+    };
+  }, [url, refetchOnFocus]);
 
   return {
     ...state,
