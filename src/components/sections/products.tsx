@@ -179,9 +179,6 @@ export function Products({ onSelectProduct }: { onSelectProduct?: (p: ApiProduct
                       <p className="mt-1 text-xs text-graphite/60 line-clamp-2">{productDesc}</p>
                     )}
                     <div className="mt-4 flex items-center justify-between border-t border-obsidian/5 pt-4">
-                      <span className="font-mono text-sm font-bold text-copper">
-                        {formatPrice(item.price, lang)}
-                      </span>
                       <span className="text-[10px] uppercase tracking-wider text-graphite/40">
                         {item.type}
                       </span>

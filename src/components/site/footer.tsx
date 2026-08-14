@@ -129,8 +129,8 @@ export function Footer() {
             {/* Contact info */}
             <div className="mt-6 space-y-3 text-sm">
               <div className="flex flex-col gap-2">
-                {(info?.phones?.length ? info.phones : ["626 68 32 32"]).map((phone, i) => (
-                  <a key={i} href={`tel:${phone.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors" data-cursor="hover">
+                {(info?.phones?.length ? info.phones : ["+224 626 86 83 23"]).map((phone, i) => (
+                  <a key={i} href={`tel:${phone.replace(/\s+/g, '').replace(/\+/g, '')}`} className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors" data-cursor="hover">
                     <Phone className="h-3.5 w-3.5" />
                     {phone}
                   </a>
@@ -248,6 +248,9 @@ export function Footer() {
                 {l}
               </button>
             ))}
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span>RCCM : GN.TCC.2026.B.10124</span>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>Designed by</span>

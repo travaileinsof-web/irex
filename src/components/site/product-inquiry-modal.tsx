@@ -120,17 +120,7 @@ export function ProductInquiryModal({ product, onClose }: Props) {
                     {product.badge}
                   </div>
                 )}
-                {/* Price overlay */}
-                <div className="absolute bottom-4 left-4">
-                  <div className="rounded-2xl bg-obsidian/80 px-4 py-2 backdrop-blur-sm">
-                    <div className="text-[10px] uppercase tracking-wider text-gold">
-                      {lang === "fr" ? "Prix" : "Price"}
-                    </div>
-                    <div className="font-mono text-lg font-bold text-ivory">
-                      {formatPrice(product.price, lang)}
-                    </div>
-                  </div>
-                </div>
+
               </div>
 
               {/* Form */}

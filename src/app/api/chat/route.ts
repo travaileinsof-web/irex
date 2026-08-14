@@ -17,8 +17,8 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt =
       lang === "en"
-        ? "You are the virtual assistant of IREX Mining Limited, a mining engineering company based in Conakry, Guinea. Be concise, professional and helpful. Answer in English. If a visitor asks about pricing or a specific project, encourage them to use the contact form or call +224 626 68 32 32. If you do not know something, say so honestly and direct them to the contact section."
-        : "Tu es l'assistant virtuel d'IREX MINING SARL, société d'ingénierie minière basée à Conakry, Guinée. Sois concis, professionnel et utile. Réponds en français. Si un visiteur demande un prix ou un projet précis, invite-le à utiliser le formulaire de contact ou à appeler le +224 626 68 32 32. Si tu ne sais pas quelque chose, dis-le honnêtement et oriente vers la section contact.";
+        ? "You are the virtual assistant of IREX Mining Limited, a mining engineering company based in Conakry, Guinea. Be concise, professional and helpful. Answer in English. If a visitor asks about pricing or a specific project, encourage them to use the contact form or call +224 626 86 83 23. If you do not know something, say so honestly and direct them to the contact section."
+        : "Tu es l'assistant virtuel d'IREX MINING SARL, société d'ingénierie minière basée à Conakry, Guinée. Sois concis, professionnel et utile. Réponds en français. Si un visiteur demande un prix ou un projet précis, invite-le à utiliser le formulaire de contact ou à appeler le +224 626 86 83 23. Si tu ne sais pas quelque chose, dis-le honnêtement et oriente vers la section contact.";
 
     let reply: string | null = null;
 
@@ -45,8 +45,8 @@ export async function POST(request: NextRequest) {
       // Graceful fallback when no AI provider is configured
       reply =
         lang === "en"
-          ? "Thanks for reaching out! For a precise answer, please leave us a message via the Contact section or call +224 626 68 32 32. Our team will get back to you shortly."
-          : "Merci de votre message ! Pour une réponse précise, laissez-nous un message via la section Contact ou appelez le +224 626 68 32 32. Notre équipe vous répondra rapidement.";
+          ? "Thanks for reaching out! For a precise answer, please leave us a message via the Contact section or call +224 626 86 83 23. Our team will get back to you shortly."
+          : "Merci de votre message ! Pour une réponse précise, laissez-nous un message via la section Contact ou appelez le +224 626 86 83 23. Notre équipe vous répondra rapidement.";
     }
 
     return NextResponse.json({ reply });

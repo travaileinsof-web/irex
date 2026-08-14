@@ -126,7 +126,7 @@ export const content = {
         },
         { 
           icon: "clipboard", 
-          title: "Consultation & Expertise", 
+          title: "Consultation, Audit et Expertise", 
           desc: "Conseil technique, audit et expertise de haut niveau pour sécuriser et valoriser vos investissements.",
           features: ["Due diligence technique et financière", "Audits opérationnels indépendants", "Assistance à la maîtrise d'ouvrage", "Conseils en stratégie de développement minier"]
         },
@@ -139,22 +139,22 @@ export const content = {
         "Notre module e-commerce couvre 7 catégories de produits et solutions dédiées au secteur minier et industriel.",
       categories: [
         { name: "Équipements et Fournitures Minières", count: 48 },
-        { name: "Solutions HSE", count: 32 },
-        { name: "Maintenance Industrielle", count: 26 },
+        { name: "Formation et Solutions HSE", count: 32 },
+        { name: "Fourniture et Maintenance des Équipements HSE", count: 26 },
         { name: "Solutions Environnementales", count: 19 },
         { name: "Solutions Numériques", count: 14 },
-        { name: "Documentation et Formation", count: 22 },
+        { name: "Documentation et Système de Gestion HSE : Conception et Mise en place du Système de Gestion HSE – en conformité avec les normes ISO", count: 22 },
         { name: "Solutions Personnalisées", count: 8 },
       ],
       items: [
-        { name: "Kit EPI Premium Minier", category: "Solutions HSE", price: 285000, badge: "Best-seller" },
+        { name: "Kit EPI Premium Minier", category: "Formation et Solutions HSE", price: 285000, badge: "Best-seller" },
         { name: "Pompe Centrifuge Industrielle", category: "Équipements et Fournitures Minières", price: 4500000 },
         { name: "Logiciel de Surveillance HSE", category: "Solutions Numériques", price: 1200000, badge: "Nouveau" },
-        { name: "Module Formation SSE Niveau 1", category: "Documentation et Formation", price: 350000 },
+        { name: "Module Formation SSE Niveau 1", category: "Documentation et Système de Gestion HSE : Conception et Mise en place du Système de Gestion HSE – en conformité avec les normes ISO", price: 350000 },
         { name: "Station de Traitement d'Eau", category: "Solutions Environnementales", price: 18500000 },
-        { name: "Outillage de Maintenance Lourde", category: "Maintenance Industrielle", price: 920000 },
+        { name: "Fourniture et Maintenance des Équipements HSE", category: "Fourniture et Maintenance des Équipements HSE", price: 920000 },
         { name: "Audit Énergétique Personnalisé", category: "Solutions Personnalisées", price: 3500000, badge: "Sur-mesure" },
-        { name: "Détecteur Multi-Gaz Portable", category: "Solutions HSE", price: 680000 },
+        { name: "Détecteur Multi-Gaz Portable", category: "Formation et Solutions HSE", price: 680000 },
       ],
     },
     projects: {
@@ -280,7 +280,7 @@ export const content = {
       },
       info: {
         address: "Matoto Centre, Commune Urbaine de Matoto\nConakry",
-        phone: "626 68 32 32",
+        phone: "+224 626 86 83 23",
         email: "irexmine1@outlook.com",
         hours: "Lun – Ven : 08h00 — 18h00\nSam : 09h00 — 13h00",
       },
@@ -310,7 +310,7 @@ export const content = {
       placeholder: "Tapez votre message...",
       quick: ["Vos services ?", "Demander un devis", "Nous contacter", "Nos formations"],
       response:
-        "Merci pour votre message ! Notre équipe vous recontactera sous 48h. Pour une réponse immédiate, appelez le 626 68 32 32 ou écrivez à irexmine1@outlook.com.",
+        "Merci pour votre message ! Notre équipe vous recontactera sous 48h. Pour une réponse immédiate, appelez le +224 626 86 83 23 ou écrivez à irexmine1@outlook.com.",
     },
     common: {
       learnMore: "En savoir plus",
@@ -581,7 +581,7 @@ export const content = {
       },
       info: {
         address: "Matoto Centre, Commune Urbaine de Matoto\nConakry",
-        phone: "626 68 32 32",
+        phone: "+224 626 86 83 23",
         email: "irexmine1@outlook.com",
         hours: "Mon – Fri: 8:00 AM — 6:00 PM\nSat: 9:00 AM — 1:00 PM",
       },
@@ -611,7 +611,7 @@ export const content = {
       placeholder: "Type your message...",
       quick: ["Your services?", "Request a quote", "Contact us", "Our training"],
       response:
-        "Thank you for your message! Our team will contact you within 48h. For an immediate response, call 626 68 32 32 or write to irexmine1@outlook.com.",
+        "Thank you for your message! Our team will contact you within 48h. For an immediate response, call +224 626 86 83 23 or write to irexmine1@outlook.com.",
     },
     common: {
       learnMore: "Learn more",

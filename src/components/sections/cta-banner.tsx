@@ -70,12 +70,12 @@ export function CtaBanner() {
  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
  </button>
  <a
- href="tel:626683232"
+ href="tel:+224626868323"
  data-cursor="hover"
  className="group inline-flex items-center gap-2 rounded-full border border-ivory/40 px-7 py-3.5 text-sm font-medium text-ivory transition-all hover:border-gold hover:bg-gold/10 hover:text-gold"
  >
  <Phone className="h-4 w-4" />
- 626 68 32 32
+ +224 626 86 83 23
  </a>
  </div>
  </Reveal>
