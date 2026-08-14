@@ -1,0 +1,70 @@
+====================================================================
+TUTORIEL : COMMENT AJOUTER DES IMAGES SUR LE SITE IREX MINING
+====================================================================
+Outil utilisé : Postimages.org (Gratuit et sans inscription)
+
+Ce guide détaillé vous expliquera étape par étape comment prendre 
+une image depuis votre ordinateur et l'afficher en temps réel sur 
+votre site via le tableau de bord Administrateur.
+
+--------------------------------------------------------------------
+ÉTAPE 1 : PRÉPARER VOTRE IMAGE
+--------------------------------------------------------------------
+1. Assurez-vous que l'image que vous souhaitez publier est bien 
+   enregistrée sur votre ordinateur (format .jpg, .png ou .webp).
+2. Vérifiez que la taille de l'image n'est pas excessivement lourde 
+   (idéalement moins de 2 Mo) pour garantir un chargement rapide du site.
+
+--------------------------------------------------------------------
+ÉTAPE 2 : TÉLÉVERSER (UPLOAD) L'IMAGE SUR POSTIMAGES
+--------------------------------------------------------------------
+1. Ouvrez votre navigateur internet (Chrome, Safari, Edge...).
+2. Allez sur le site suivant : https://postimages.org/fr/
+3. Sur la page d'accueil, vous verrez un gros bouton bleu 
+   "Choisissez des images" (ou "Choose images"). Cliquez dessus.
+4. Une fenêtre s'ouvre : naviguez dans vos dossiers, sélectionnez 
+   l'image que vous avez préparée, puis cliquez sur "Ouvrir".
+5. Patientez quelques secondes pendant que la barre de progression 
+   se remplit à 100%.
+
+--------------------------------------------------------------------
+ÉTAPE 3 : RÉCUPÉRER LE "LIEN DIRECT" (TRÈS IMPORTANT)
+--------------------------------------------------------------------
+Une fois l'image chargée, Postimages vous affiche une page avec 
+plusieurs champs contenant des liens différents.
+
+ATTENTION : Ne copiez pas le premier lien ! Le tableau de bord 
+IREX a besoin du lien "Direct" de l'image.
+
+1. Regardez la deuxième ligne intitulée : "Lien direct" (ou "Direct Link").
+2. Le lien doit OBLIGATOIREMENT se terminer par une extension d'image, 
+   comme .jpg ou .png (exemple : https://i.postimg.cc/abcde/mon-image.jpg).
+3. À droite de ce champ "Lien direct", cliquez sur le petit bouton 
+   "Copier" (l'icône qui ressemble à deux feuilles de papier superposées). 
+   Un message "Copié !" s'affichera.
+
+--------------------------------------------------------------------
+ÉTAPE 4 : AJOUTER L'IMAGE DANS LE TABLEAU DE BORD IREX
+--------------------------------------------------------------------
+1. Allez sur votre tableau de bord administrateur IREX.
+2. Ouvrez la section où vous souhaitez ajouter l'image 
+   (Produits, Événements, Articles de Blog, Équipe, etc.).
+3. Cliquez sur "Ajouter" ou "Modifier" un élément existant.
+4. Repérez le champ de texte prévu pour l'image (généralement 
+   nommé "URL de l'image" ou "Image URL").
+5. Faites un clic-droit dans ce champ et sélectionnez "Coller" 
+   (ou utilisez le raccourci Ctrl+V sur Windows / Cmd+V sur Mac).
+   Le lien que vous avez copié à l'étape 3 va s'afficher.
+6. Enregistrez ou validez vos modifications en bas de la page.
+
+--------------------------------------------------------------------
+ÉTAPE 5 : VÉRIFICATION EN TEMPS RÉEL
+--------------------------------------------------------------------
+C'est terminé ! 
+Retournez sur la partie publique de votre site IREX (côté client).
+Rechargez la page si nécessaire : votre nouvelle image est 
+maintenant affichée et visible par tous les visiteurs en temps réel.
+
+====================================================================
+Fin du tutoriel.
+====================================================================
