@@ -1,6 +1,6 @@
 # IREX Mining — Website + Admin Dashboard
 
-Premium bilingual (FR/EN) corporate website for IREX MINING SARL with a complete admin dashboard for real-time content management.
+Premium bilingual (FR/EN) corporate website for IREX MINING with a complete admin dashboard for real-time content management.
 
 ## Tech Stack
 
@@ -90,7 +90,7 @@ The dashboard at `/admin` allows the client to manage in real-time:
 | **Donations** | Add/edit/delete donation tiers (amount, title FR/EN, perks FR/EN, popular flag) |
 | **FAQ** | Add/edit/delete FAQ items (question FR/EN, answer FR/EN, category, order) |
 | **Partners** | Add/edit/delete partners (name, logo URL, website) |
-| **Stats** | Edit site-wide statistics (HSE compliance, product categories, expertise domains, support availability) |
+| **Stats** | Edit site-wide statistics (SSE compliance, product categories, expertise domains, support availability) |
 | **Contact Info** | Edit address, phone, email, hours (FR/EN), Google Maps embed URL |
 
 **Pages NOT editable from dashboard** (per client requirement):
@@ -135,7 +135,7 @@ All admin endpoints: `POST/PUT/DELETE` require JWT auth cookie
 - **Coal** `#14141a` — card background
 - **Gold** `#d4a547` — primary accent
 - **Copper** `#b8612c` — secondary accent
-- **Emerald** `#2d7a5f` — tertiary accent (for sustainability/HSE sections)
+- **Emerald** `#2d7a5f` — tertiary accent (for sustainability/SSE sections)
 - **Ivory** `#faf7f0` — light section backgrounds
 
 ## License

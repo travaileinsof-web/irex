@@ -26,7 +26,8 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/submissions", label: "Inbox", icon: Inbox, badgeKey: "newSubmissions" },
+  { href: "/admin/submissions", label: "Messages & CVs", icon: Inbox, badgeKey: "newSubmissions" },
+  { href: "/admin/services", label: "Services", icon: Briefcase },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },
   { href: "/admin/projects", label: "Projects", icon: Briefcase },
@@ -39,6 +40,7 @@ const navItems = [
   { href: "/admin/partners", label: "Partners", icon: Handshake },
   { href: "/admin/stats", label: "Stats", icon: BarChart3 },
   { href: "/admin/contact-info", label: "Contact Info", icon: MapPin },
+  { href: "/admin/about", label: "About Page", icon: FileText },
   { href: "/admin/settings", label: "Pages Settings", icon: LayoutDashboard },
 ];
 

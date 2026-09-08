@@ -24,8 +24,8 @@ export const images = {
     "https://sfile.chatglm.cn/images-ppt/014459be7c0b.jpg",
     "https://sfile.chatglm.cn/images-ppt/480f3f31f20c.jpg",
   ],
-  // Safety equipment / HSE
-  hse: [
+  // Safety equipment / SSE
+  sse: [
     "https://sfile.chatglm.cn/images-ppt/45e8b6cc5e07.jpg",
     "https://sfile.chatglm.cn/images-ppt/ad275eddf4ad.jpeg",
     "https://sfile.chatglm.cn/images-ppt/799a655525c1.jpg",
@@ -100,7 +100,7 @@ export const serviceImages: Record<string, string> = {
   "hard-hat": images.construction[0],
   pickaxe: images.mining[3],
   leaf: images.nature[0],
-  shield: images.hse[0],
+  shield: images.sse[0],
   truck: images.truck[0],
   graduation: images.team[3],
   clipboard: images.office[0],
@@ -109,7 +109,7 @@ export const serviceImages: Record<string, string> = {
 // Project images
 export const projectImages = [
   images.mining[0],
-  images.hse[1],
+  images.sse[1],
   images.nature[1],
   images.team[4],
   images.truck[2],
@@ -118,20 +118,20 @@ export const projectImages = [
 
 // Product images
 export const productImages = [
-  images.hse[2],
+  images.sse[2],
   images.pump[0],
   images.office[1],
   images.team[5],
   images.nature[2],
   images.pump[3],
   images.construction[3],
-  images.hse[3],
+  images.sse[3],
 ];
 
 // Blog cover images
 export const blogImages = [
   images.mining[4],
-  images.hse[4],
+  images.sse[4],
   images.team[6],
   images.construction[4],
 ];
@@ -139,7 +139,7 @@ export const blogImages = [
 // Event images
 export const eventImages = [
   images.team[7],
-  images.hse[5],
+  images.sse[5],
   images.office[2],
   images.mining[6],
 ];

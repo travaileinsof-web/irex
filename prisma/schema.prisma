@@ -63,6 +63,26 @@ model Product {
 }
 
 // ============================================
+// SERVICES — Company Expertises
+// ============================================
+
+model Service {
+  id            String   @id @default(cuid())
+  title         String   @unique
+  titleEn       String?
+  description   String
+  descriptionEn String?
+  icon          String?  // lucide icon name
+  image         String?  // URL or base64
+  features      String   // newline-separated list
+  featuresEn    String?
+  published     Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ============================================
 // PROJECTS — past, ongoing, future
 // ============================================
 
@@ -72,7 +92,7 @@ model Project {
   nameEn      String?
   description String
   descriptionEn String?
-  sector      String   // "Exploration", "HSE", "Environnement", etc.
+  sector      String   // "Exploration", "SSE", "Environnement", etc.
   year        String
   status      String   // "Livré" / "En cours" / "À venir" — "Delivered" / "Ongoing" / "Upcoming"
   image       String?
@@ -120,7 +140,7 @@ model BlogPost {
   excerptEn   String?
   content     String   // markdown
   contentEn   String?
-  category    String   // "Stratégie", "HSE", "Formation", "Innovation"
+  category    String   // "Stratégie", "SSE", "Formation", "Innovation"
   coverImage  String?
   author      String?
   readTime    String?  // "8 min"

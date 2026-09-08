@@ -48,14 +48,14 @@ export const content = {
       stats: [
         { value: 12, suffix: "+", label: "Domaines d'Expertise" },
         { value: 7, suffix: "", label: "Catégories Produits" },
-        { value: 100, suffix: "%", label: "Engagement HSE" },
+        { value: 100, suffix: "%", label: "Engagement SSE" },
         { value: 5, suffix: "", label: "Emails Professionnels" },
       ],
     },
     about: {
       tag: "À Propos d'IREX Mining",
       title: "Un partenaire stratégique de confiance pour le secteur minier",
-      lead: "IREX MINING SARL est une société créée pour promouvoir le développement durable et intégré à travers des services spécialisés en ingénierie, construction, recherche, expertise, consultation, investigation et formation professionnelle au profit des secteurs public, privé et mixte.",
+      lead: "IREX MINING est une société créée pour promouvoir le développement durable et intégré à travers des services spécialisés en ingénierie, construction, recherche, expertise, consultation, investigation et formation professionnelle au profit des secteurs public, privé et mixte.",
       paragraphs: [
         "IREX Mining a pour vocation d'accompagner les organisations dans l'atteinte de leurs objectifs stratégiques et opérationnels en leur apportant des solutions innovantes, une expertise technique de haut niveau et un appui professionnel adapté à leurs besoins.",
         "À travers la mobilisation de compétences multidisciplinaires et le partage des meilleures pratiques, IREX Mining intervient notamment dans les domaines de l'ingénierie, de la construction, des mines, de l'environnement, de la santé et sécurité au travail, de la recherche et du développement des capacités.",
@@ -108,9 +108,9 @@ export const content = {
         },
         { 
           icon: "shield", 
-          title: "Santé & Sécurité (HSE)", 
+          title: "Santé & Sécurité (SSE)", 
           desc: "Garantir les plus hauts standards en Santé, Sécurité et Environnement conformes aux normes les plus exigeantes.",
-          features: ["Audits de conformité HSE", "Élaboration de plans de gestion des risques", "Formation aux premiers secours et sauvetage", "Enquêtes sur les incidents et analyses des causes"]
+          features: ["Audits de conformité SSE", "Élaboration de plans de gestion des risques", "Formation aux premiers secours et sauvetage", "Enquêtes sur les incidents et analyses des causes"]
         },
         { 
           icon: "truck", 
@@ -139,22 +139,22 @@ export const content = {
         "Notre module e-commerce couvre 7 catégories de produits et solutions dédiées au secteur minier et industriel.",
       categories: [
         { name: "Équipements et Fournitures Minières", count: 48 },
-        { name: "Formation et Solutions HSE", count: 32 },
-        { name: "Fourniture et Maintenance des Équipements HSE", count: 26 },
+        { name: "Formation et Solutions SSE", count: 32 },
+        { name: "Fourniture et Maintenance des Équipements SSE", count: 26 },
         { name: "Solutions Environnementales", count: 19 },
         { name: "Solutions Numériques", count: 14 },
-        { name: "Documentation et Système de Gestion HSE : Conception et Mise en place du Système de Gestion HSE – en conformité avec les normes ISO", count: 22 },
+        { name: "Documentation et Système de Gestion SSE : Conception et Mise en place du Système de Gestion SSE – en conformité avec les normes ISO", count: 22 },
         { name: "Solutions Personnalisées", count: 8 },
       ],
       items: [
-        { name: "Kit EPI Premium Minier", category: "Formation et Solutions HSE", price: 285000, badge: "Best-seller" },
+        { name: "Kit EPI Premium Minier", category: "Formation et Solutions SSE", price: 285000, badge: "Best-seller" },
         { name: "Pompe Centrifuge Industrielle", category: "Équipements et Fournitures Minières", price: 4500000 },
-        { name: "Logiciel de Surveillance HSE", category: "Solutions Numériques", price: 1200000, badge: "Nouveau" },
-        { name: "Module Formation SSE Niveau 1", category: "Documentation et Système de Gestion HSE : Conception et Mise en place du Système de Gestion HSE – en conformité avec les normes ISO", price: 350000 },
+        { name: "Logiciel de Surveillance SSE", category: "Solutions Numériques", price: 1200000, badge: "Nouveau" },
+        { name: "Module Formation SSE Niveau 1", category: "Documentation et Système de Gestion SSE : Conception et Mise en place du Système de Gestion SSE – en conformité avec les normes ISO", price: 350000 },
         { name: "Station de Traitement d'Eau", category: "Solutions Environnementales", price: 18500000 },
-        { name: "Fourniture et Maintenance des Équipements HSE", category: "Fourniture et Maintenance des Équipements HSE", price: 920000 },
+        { name: "Fourniture et Maintenance des Équipements SSE", category: "Fourniture et Maintenance des Équipements SSE", price: 920000 },
         { name: "Audit Énergétique Personnalisé", category: "Solutions Personnalisées", price: 3500000, badge: "Sur-mesure" },
-        { name: "Détecteur Multi-Gaz Portable", category: "Formation et Solutions HSE", price: 680000 },
+        { name: "Détecteur Multi-Gaz Portable", category: "Formation et Solutions SSE", price: 680000 },
       ],
     },
     projects: {
@@ -164,7 +164,7 @@ export const content = {
         "Sélection de projets illustrant notre engagement pour l'excellence opérationnelle et le développement responsable.",
       items: [
         { name: "Programme d'Exploration Boké", sector: "Exploration", year: "2024", status: "Livré" },
-        { name: "Audit HSE Complexe Minier Kalia", sector: "HSE", year: "2024", status: "Livré" },
+        { name: "Audit SSE Complexe Minier Kalia", sector: "SSE", year: "2024", status: "Livré" },
         { name: "Plan de Gestion Environnementale Nimba", sector: "Environnement", year: "2023", status: "En cours" },
         { name: "Centre de Formation Technique Conakry", sector: "Formation", year: "2023", status: "Livré" },
         { name: "Optimisation Logistique Port de Conakry", sector: "Logistique", year: "2025", status: "En cours" },
@@ -175,7 +175,7 @@ export const content = {
       tag: "Impact",
       title: "Une présence qui compte",
       items: [
-        { value: 100, suffix: "%", label: "Conformité HSE" },
+        { value: 100, suffix: "%", label: "Conformité SSE" },
         { value: 7, suffix: "", label: "Catégories de Produits" },
         { value: 12, suffix: "+", label: "Domaines d'Expertise" },
         { value: 24, suffix: "/7", label: "Support Disponible" },
@@ -185,11 +185,11 @@ export const content = {
       tag: "Notre Équipe",
       title: "Des talents engagés pour l'excellence",
       subtitle:
-        "Ingénieurs, techniciens, spécialistes HSE et experts désireux de contribuer à des projets miniers innovants dans un environnement fondé sur l'excellence, la sécurité et l'intégrité.",
+        "Ingénieurs, techniciens, spécialistes SSE et experts désireux de contribuer à des projets miniers innovants dans un environnement fondé sur l'excellence, la sécurité et l'intégrité.",
       members: [
         { name: "Direction Générale", role: "CEO & Fondateur", expertise: "Stratégie • Ingénierie Minière" },
-        { name: "Direction Technique", role: "Directrice des Opérations", expertise: "Exploitation • HSE" },
-        { name: "Direction HSE", role: "Responsable Santé-Sécurité", expertise: "Environnement • Conformité" },
+        { name: "Direction Technique", role: "Directrice des Opérations", expertise: "Exploitation • SSE" },
+        { name: "Direction SSE", role: "Responsable Santé-Sécurité", expertise: "Environnement • Conformité" },
         { name: "Direction Ingénierie", role: "Ingénieur en Chef", expertise: "Conception • Construction" },
         { name: "Direction Formation", role: "Responsable Capacités", expertise: "Formation • Développement" },
         { name: "Direction Logistique", role: "Responsable Supply Chain", expertise: "Logistique • Maintenance" },
@@ -199,7 +199,7 @@ export const content = {
       tag: "Témoignages",
       title: "La confiance de nos partenaires",
       items: [
-        { quote: "IREX Mining a transformé notre approche de la sécurité. Leur rigueur et leur expertise technique ont hissé notre conformité HSE à un niveau inégalé.", author: "Directeur Opérations", company: "Société Minière, Guinée" },
+        { quote: "IREX Mining a transformé notre approche de la sécurité. Leur rigueur et leur expertise technique ont hissé notre conformité SSE à un niveau inégalé.", author: "Directeur Opérations", company: "Société Minière, Guinée" },
         { quote: "Un partenaire stratégique qui combine innovation technique et responsabilité sociale. Nos projets n'ont jamais été aussi performants.", author: "CEO", company: "Investisseur Minier, Afrique de l'Ouest" },
         { quote: "Le programme de formation a renforcé durablement les compétences de nos équipes locales. Un véritable transfert de savoir-faire.", author: "Responsable RH", company: "Groupe Industriel, Conakry" },
       ],
@@ -215,7 +215,7 @@ export const content = {
       subtitle: "Analyses, retours d'expérience et actualités du secteur minier guinéen et international.",
       items: [
         { title: "L'avenir de l'exploitation minière durable en Guinée", category: "Stratégie", date: "12 Juin 2026", readTime: "8 min" },
-        { title: "Standards HSE : comment dépasser les exigences internationales", category: "HSE", date: "28 Mai 2026", readTime: "6 min" },
+        { title: "Standards SSE : comment dépasser les exigences internationales", category: "SSE", date: "28 Mai 2026", readTime: "6 min" },
         { title: "Renforcement des capacités : le levier du développement local", category: "Formation", date: "15 Mai 2026", readTime: "10 min" },
         { title: "Digitalisation des opérations minières : état des lieux 2026", category: "Innovation", date: "02 Mai 2026", readTime: "7 min" },
       ],
@@ -226,7 +226,7 @@ export const content = {
       subtitle: "Salons, conférences et sessions de formation organisés ou co-organisés par IREX Mining.",
       items: [
         { name: "Guinea Mining Summit 2026", date: "15-17 Septembre 2026", location: "Conakry, Guinée", type: "Sommet" },
-        { name: "Formation HSE Niveau 2", date: "08-10 Octobre 2026", location: "Matoto, Conakry", type: "Formation" },
+        { name: "Formation SSE Niveau 2", date: "08-10 Octobre 2026", location: "Matoto, Conakry", type: "Formation" },
         { name: "Conférence Industrie Minière Durable", date: "22 Novembre 2026", location: "Abidjan, Côte d'Ivoire", type: "Conférence" },
         { name: "Workshop Digitalisation Minière", date: "05 Décembre 2026", location: "En ligne", type: "Workshop" },
       ],
@@ -239,8 +239,8 @@ export const content = {
         { q: "Dans quels domaines intervient IREX Mining ?", a: "Nos interventions couvrent l'ingénierie, la construction, les mines, l'environnement, la santé et sécurité au travail, la recherche et le développement des capacités, ainsi que la consultation et l'expertise spécialisée." },
         { q: "Quelles sont vos zones d'intervention géographiques ?", a: "Notre siège est à Matoto Centre, Commune Urbaine de Matoto, Conakry — République de Guinée. Nous opérons principalement en Afrique de l'Ouest et collaborons avec des partenaires internationaux." },
         { q: "Comment puis-je obtenir un devis personnalisé ?", a: "Vous pouvez nous contacter via le formulaire de contact, par téléphone au 626868323 ou par email à irexmine1@outlook.com. Notre équipe vous répondra sous 48h avec une proposition adaptée." },
-        { q: "Proposez-vous des formations professionnelles ?", a: "Oui. Le renforcement des capacités est un pilier de notre offre, avec des formations HSE, techniques et managériales adaptées aux besoins du secteur minier guinéen." },
-        { q: "Quels standards HSE suivez-vous ?", a: "Nous appliquons les meilleures pratiques internationales et garantissons les plus hauts standards en Santé, Sécurité et Environnement, conformes aux normes les plus exigeantes du secteur." },
+        { q: "Proposez-vous des formations professionnelles ?", a: "Oui. Le renforcement des capacités est un pilier de notre offre, avec des formations SSE, techniques et managériales adaptées aux besoins du secteur minier guinéen." },
+        { q: "Quels standards SSE suivez-vous ?", a: "Nous appliquons les meilleures pratiques internationales et garantissons les plus hauts standards en Santé, Sécurité et Environnement, conformes aux normes les plus exigeantes du secteur." },
       ],
     },
     careers: {
@@ -249,7 +249,7 @@ export const content = {
       subtitle: "Nous recrutons des talents désireux de contribuer à des projets miniers innovants dans un environnement fondé sur l'excellence, la sécurité et l'intégrité.",
       openings: [
         { title: "Ingénieur Minier Senior", location: "Conakry, Guinée", type: "CDI", dept: "Ingénierie" },
-        { title: "Spécialiste HSE", location: "Site Boké", type: "CDI", dept: "HSE" },
+        { title: "Spécialiste SSE", location: "Site Boké", type: "CDI", dept: "SSE" },
         { title: "Formateur Technique", location: "Conakry, Guinée", type: "CDD", dept: "Formation" },
         { title: "Responsable Logistique", location: "Conakry, Guinée", type: "CDI", dept: "Logistique" },
       ],
@@ -286,7 +286,7 @@ export const content = {
       },
     },
     footer: {
-      tagline: "IREX MINING SARL",
+      tagline: "IREX MINING",
       description: "Solutions d'ingénierie minière innovantes, durables et responsables pour le développement du secteur minier en Guinée et en Afrique de l'Ouest.",
       columns: {
         company: "Société",
@@ -349,7 +349,7 @@ export const content = {
       stats: [
         { value: 12, suffix: "+", label: "Expertise Domains" },
         { value: 7, suffix: "", label: "Product Categories" },
-        { value: 100, suffix: "%", label: "HSE Commitment" },
+        { value: 100, suffix: "%", label: "SSE Commitment" },
         { value: 5, suffix: "", label: "Professional Emails" },
       ],
     },
@@ -409,9 +409,9 @@ export const content = {
         },
         { 
           icon: "shield", 
-          title: "Health & Safety (HSE)", 
+          title: "Health & Safety (SSE)", 
           desc: "Guaranteeing the highest Health, Safety and Environment standards compliant with the most demanding norms.",
-          features: ["HSE compliance audits", "Risk management plan development", "First aid and rescue training", "Incident investigation and root cause analysis"]
+          features: ["SSE compliance audits", "Risk management plan development", "First aid and rescue training", "Incident investigation and root cause analysis"]
         },
         { 
           icon: "truck", 
@@ -440,7 +440,7 @@ export const content = {
         "Our e-commerce module covers 7 product and solution categories dedicated to the mining and industrial sector.",
       categories: [
         { name: "Mining Equipment & Supplies", count: 48 },
-        { name: "HSE Solutions", count: 32 },
+        { name: "SSE Solutions", count: 32 },
         { name: "Industrial Maintenance", count: 26 },
         { name: "Environmental Solutions", count: 19 },
         { name: "Digital Solutions", count: 14 },
@@ -448,14 +448,14 @@ export const content = {
         { name: "Custom Solutions", count: 8 },
       ],
       items: [
-        { name: "Premium Mining PPE Kit", category: "HSE Solutions", price: 285000, badge: "Best-seller" },
+        { name: "Premium Mining PPE Kit", category: "SSE Solutions", price: 285000, badge: "Best-seller" },
         { name: "Industrial Centrifugal Pump", category: "Mining Equipment & Supplies", price: 4500000 },
-        { name: "HSE Monitoring Software", category: "Digital Solutions", price: 1200000, badge: "New" },
-        { name: "HSE Training Module Level 1", category: "Documentation & Training", price: 350000 },
+        { name: "SSE Monitoring Software", category: "Digital Solutions", price: 1200000, badge: "New" },
+        { name: "SSE Training Module Level 1", category: "Documentation & Training", price: 350000 },
         { name: "Water Treatment Plant", category: "Environmental Solutions", price: 18500000 },
         { name: "Heavy Maintenance Tooling", category: "Industrial Maintenance", price: 920000 },
         { name: "Custom Energy Audit", category: "Custom Solutions", price: 3500000, badge: "Made-to-measure" },
-        { name: "Portable Multi-Gas Detector", category: "HSE Solutions", price: 680000 },
+        { name: "Portable Multi-Gas Detector", category: "SSE Solutions", price: 680000 },
       ],
     },
     projects: {
@@ -465,7 +465,7 @@ export const content = {
         "A selection of projects illustrating our commitment to operational excellence and responsible development.",
       items: [
         { name: "Boké Exploration Program", sector: "Exploration", year: "2024", status: "Delivered" },
-        { name: "Kalia Mining Complex HSE Audit", sector: "HSE", year: "2024", status: "Delivered" },
+        { name: "Kalia Mining Complex SSE Audit", sector: "SSE", year: "2024", status: "Delivered" },
         { name: "Nimba Environmental Management Plan", sector: "Environment", year: "2023", status: "Ongoing" },
         { name: "Conakry Technical Training Center", sector: "Training", year: "2023", status: "Delivered" },
         { name: "Conakry Port Logistics Optimization", sector: "Logistics", year: "2025", status: "Ongoing" },
@@ -476,7 +476,7 @@ export const content = {
       tag: "Impact",
       title: "A presence that matters",
       items: [
-        { value: 100, suffix: "%", label: "HSE Compliance" },
+        { value: 100, suffix: "%", label: "SSE Compliance" },
         { value: 7, suffix: "", label: "Product Categories" },
         { value: 12, suffix: "+", label: "Expertise Domains" },
         { value: 24, suffix: "/7", label: "Support Available" },
@@ -486,11 +486,11 @@ export const content = {
       tag: "Our Team",
       title: "Talents committed to excellence",
       subtitle:
-        "Engineers, technicians, HSE specialists and experts eager to contribute to innovative mining projects in an environment built on excellence, safety and integrity.",
+        "Engineers, technicians, SSE specialists and experts eager to contribute to innovative mining projects in an environment built on excellence, safety and integrity.",
       members: [
         { name: "General Management", role: "CEO & Founder", expertise: "Strategy • Mining Engineering" },
-        { name: "Technical Management", role: "Operations Director", expertise: "Operations • HSE" },
-        { name: "HSE Management", role: "Health-Safety Manager", expertise: "Environment • Compliance" },
+        { name: "Technical Management", role: "Operations Director", expertise: "Operations • SSE" },
+        { name: "SSE Management", role: "Health-Safety Manager", expertise: "Environment • Compliance" },
         { name: "Engineering Management", role: "Chief Engineer", expertise: "Design • Construction" },
         { name: "Training Management", role: "Capacity Manager", expertise: "Training • Development" },
         { name: "Logistics Management", role: "Supply Chain Manager", expertise: "Logistics • Maintenance" },
@@ -500,7 +500,7 @@ export const content = {
       tag: "Testimonials",
       title: "Our partners' trust",
       items: [
-        { quote: "IREX Mining transformed our safety approach. Their rigor and technical expertise took our HSE compliance to an unprecedented level.", author: "Operations Director", company: "Mining Company, Guinea" },
+        { quote: "IREX Mining transformed our safety approach. Their rigor and technical expertise took our SSE compliance to an unprecedented level.", author: "Operations Director", company: "Mining Company, Guinea" },
         { quote: "A strategic partner combining technical innovation and social responsibility. Our projects have never been so successful.", author: "CEO", company: "Mining Investor, West Africa" },
         { quote: "The training program durably strengthened the skills of our local teams. A true know-how transfer.", author: "HR Manager", company: "Industrial Group, Conakry" },
       ],
@@ -516,7 +516,7 @@ export const content = {
       subtitle: "Analyses, case studies and news from the Guinean and international mining sector.",
       items: [
         { title: "The future of sustainable mining in Guinea", category: "Strategy", date: "June 12, 2026", readTime: "8 min" },
-        { title: "HSE standards: exceeding international requirements", category: "HSE", date: "May 28, 2026", readTime: "6 min" },
+        { title: "SSE standards: exceeding international requirements", category: "SSE", date: "May 28, 2026", readTime: "6 min" },
         { title: "Capacity building: the lever for local development", category: "Training", date: "May 15, 2026", readTime: "10 min" },
         { title: "Mining operations digitalization: 2026 overview", category: "Innovation", date: "May 02, 2026", readTime: "7 min" },
       ],
@@ -527,7 +527,7 @@ export const content = {
       subtitle: "Trade shows, conferences and training sessions organized or co-organized by IREX Mining.",
       items: [
         { name: "Guinea Mining Summit 2026", date: "September 15-17, 2026", location: "Conakry, Guinea", type: "Summit" },
-        { name: "HSE Training Level 2", date: "October 08-10, 2026", location: "Matoto, Conakry", type: "Training" },
+        { name: "SSE Training Level 2", date: "October 08-10, 2026", location: "Matoto, Conakry", type: "Training" },
         { name: "Sustainable Mining Industry Conference", date: "November 22, 2026", location: "Abidjan, Côte d'Ivoire", type: "Conference" },
         { name: "Mining Digitalization Workshop", date: "December 05, 2026", location: "Online", type: "Workshop" },
       ],
@@ -540,8 +540,8 @@ export const content = {
         { q: "In which areas does IREX Mining operate?", a: "Our interventions cover engineering, construction, mining, environment, occupational health and safety, research and capacity building, as well as specialized consulting and expertise." },
         { q: "What are your geographic intervention zones?", a: "Our headquarters is at Matoto Centre, Commune Urbaine de Matoto, Conakry — Republic of Guinea. We mainly operate in West Africa and collaborate with international partners." },
         { q: "How can I get a custom quote?", a: "You can contact us via the contact form, by phone at 626868323, or by email at irexmine1@outlook.com. Our team will respond within 48h with a tailored proposal." },
-        { q: "Do you offer professional training?", a: "Yes. Capacity building is a pillar of our offering, with HSE, technical and managerial training adapted to the needs of the Guinean mining sector." },
-        { q: "What HSE standards do you follow?", a: "We apply the best international practices and guarantee the highest Health, Safety and Environment standards, compliant with the most demanding sector norms." },
+        { q: "Do you offer professional training?", a: "Yes. Capacity building is a pillar of our offering, with SSE, technical and managerial training adapted to the needs of the Guinean mining sector." },
+        { q: "What SSE standards do you follow?", a: "We apply the best international practices and guarantee the highest Health, Safety and Environment standards, compliant with the most demanding sector norms." },
       ],
     },
     careers: {
@@ -550,7 +550,7 @@ export const content = {
       subtitle: "We recruit talents eager to contribute to innovative mining projects in an environment built on excellence, safety and integrity.",
       openings: [
         { title: "Senior Mining Engineer", location: "Conakry, Guinea", type: "Permanent", dept: "Engineering" },
-        { title: "HSE Specialist", location: "Boké Site", type: "Permanent", dept: "HSE" },
+        { title: "SSE Specialist", location: "Boké Site", type: "Permanent", dept: "SSE" },
         { title: "Technical Trainer", location: "Conakry, Guinea", type: "Fixed-term", dept: "Training" },
         { title: "Logistics Manager", location: "Conakry, Guinea", type: "Permanent", dept: "Logistics" },
       ],

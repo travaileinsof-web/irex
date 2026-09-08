@@ -110,12 +110,13 @@ export function Navbar() {
  {/* More menu */}
  {moreNav.length > 0 && (
  <div className="group relative">
- <button
- data-cursor="hover"
- className="px-4 py-2 text-sm font-medium text-ivory/70 hover:text-ivory transition-colors drop-shadow-md"
- >
- +
- </button>
+    <button
+      data-cursor="hover"
+      className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-ivory/70 hover:text-ivory transition-colors drop-shadow-md"
+    >
+      {lang === "fr" ? "Plus" : "More"}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-50"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
  <div className="invisible absolute right-0 top-full pt-2 opacity-0 translate-y-2 transition-all duration-300 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0">
  <div className="glass-strong rounded-2xl p-2 min-w-[200px]">
  {moreNav.map((s) => (

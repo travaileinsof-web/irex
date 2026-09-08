@@ -24,8 +24,8 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "IREX Mining — Ingénierie Minière d'Excellence | Guinea",
-  description: "IREX MINING SARL — Solutions d'ingénierie minière innovantes, durables et responsables. Exploration, exploitation, HSE, logistique, maintenance et renforcement des capacités en République de Guinée.",
-  keywords: ["IREX Mining", "ingénierie minière", "Guinée", "Conakry", "exploration minière", "HSE", "mines", "industrie minière", "consulting minier", "Afrique de l'Ouest"],
+  description: "IREX MINING — Solutions d'ingénierie minière innovantes, durables et responsables. Exploration, exploitation, SSE, logistique, maintenance et renforcement des capacités en République de Guinée.",
+  keywords: ["IREX Mining", "ingénierie minière", "Guinée", "Conakry", "exploration minière", "SSE", "mines", "industrie minière", "consulting minier", "Afrique de l'Ouest"],
   authors: [{ name: "IREX Mining" }],
   icons: {
     icon: "/logo.png",

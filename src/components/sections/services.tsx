@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import {
  Compass,
@@ -18,6 +17,7 @@ import { content } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/site/reveal";
 import { serviceImages } from "@/lib/images";
 import { ServiceModal, type ServiceItem } from "@/components/site/service-modal";
+import { useFetch } from "@/hooks/use-fetch";
 
 const iconMap: Record<string, typeof Compass> = {
  compass: Compass,
@@ -36,6 +36,23 @@ export function Services() {
  const c = content[lang].services;
  const serviceKeys = ["compass", "hard-hat", "pickaxe", "leaf", "shield", "truck", "graduation", "clipboard"];
  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+
+  // Services grid — with images on hover
+  const { data: apiServices, loading } = useFetch<any[]>("/api/services");
+  
+  // Use API services if available, otherwise fallback to hardcoded
+  const itemsToRender = apiServices && apiServices.length > 0 
+    ? apiServices.map(s => ({
+        title: lang === "fr" ? s.title : (s.titleEn || s.title),
+        desc: lang === "fr" ? s.description : (s.descriptionEn || s.description),
+        icon: s.icon || "compass",
+        image: s.image, // from DB
+        features: lang === "fr" ? (s.features || "").split('\n') : (s.featuresEn || s.features || "").split('\n'),
+      }))
+    : c.items.map((s, i) => ({
+        ...s,
+        image: serviceImages[serviceKeys[i]] ?? serviceImages.compass,
+      }));
 
  return (
  <>
@@ -70,64 +87,73 @@ export function Services() {
  </Reveal>
  </div>
 
- {/* Services grid — with images on hover */}
- <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
- {c.items.map((s, i) => {
- const Icon = iconMap[s.icon] ?? Compass;
- const img = serviceImages[serviceKeys[i]] ?? serviceImages.compass;
- return (
- <Reveal key={i} delay={(i % 4) * 0.08}>
- <button
- onClick={() => setSelectedService({
-   title: s.title,
-   desc: s.desc,
-   icon: s.icon,
-   image: img,
-   IconComponent: Icon,
-   features: s.features
- })}
- data-cursor="hover"
- className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-gold/15 bg-gradient-to-b from-graphite to-coal text-left transition-all duration-500 hover:border-gold/40"
- >
- {/* Image background that reveals on hover */}
- <div className="relative h-44 overflow-hidden">
- <img src={img} alt={s.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
- <div className="absolute inset-0 bg-gradient-to-t from-coal via-coal/60 to-transparent" />
- {/* Number */}
- <div className="absolute left-4 top-4">
- <span className="font-mono text-xs text-gold">
- [ {String(i + 1).padStart(2, "0")} ]
- </span>
- </div>
- {/* Arrow */}
- <div className="absolute right-4 top-4 flex h-9 w-9 -translate-y-1 items-center justify-center rounded-full bg-gold text-obsidian opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
- <ArrowUpRight className="h-4 w-4" />
- </div>
- {/* Icon overlay */}
- <div className="absolute bottom-4 left-4">
- <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-coal/80">
- <Icon className="h-5 w-5 text-gold" />
- </div>
- </div>
- </div>
+  {/* Loading State */}
+  {loading && (
+    <div className="flex justify-center py-20">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-gold border-t-transparent" />
+    </div>
+  )}
 
- {/* Content */}
- <div className="flex flex-1 flex-col p-6">
- <h3 className="font-display text-lg font-bold text-ivory transition-colors group-hover:text-gold">
- {s.title}
- </h3>
- <p className="mt-2 text-sm leading-relaxed text-ivory/60 line-clamp-3">
- {s.desc}
- </p>
- </div>
+  {/* Services grid */}
+  {!loading && (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    {itemsToRender.map((s, i) => {
+    const Icon = iconMap[s.icon] ?? Compass;
+    const img = s.image;
+    return (
+    <Reveal key={i} delay={(i % 4) * 0.08}>
+    <button
+    onClick={() => setSelectedService({
+      title: s.title,
+      desc: s.desc,
+      icon: s.icon,
+      image: img,
+      IconComponent: Icon,
+      features: s.features
+    })}
+    data-cursor="hover"
+    className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-gold/15 bg-gradient-to-b from-graphite to-coal text-left transition-all duration-500 hover:border-gold/40"
+    >
+    {/* Image background that reveals on hover */}
+    <div className="relative h-44 overflow-hidden">
+    <img src={img} alt={s.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+    <div className="absolute inset-0 bg-gradient-to-t from-coal via-coal/60 to-transparent" />
+    {/* Number */}
+    <div className="absolute left-4 top-4">
+    <span className="font-mono text-xs text-gold">
+    [ {String(i + 1).padStart(2, "0")} ]
+    </span>
+    </div>
+    {/* Arrow */}
+    <div className="absolute right-4 top-4 flex h-9 w-9 -translate-y-1 items-center justify-center rounded-full bg-gold text-obsidian opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+    <ArrowUpRight className="h-4 w-4" />
+    </div>
+    {/* Icon overlay */}
+    <div className="absolute bottom-4 left-4">
+    <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-coal/80">
+    <Icon className="h-5 w-5 text-gold" />
+    </div>
+    </div>
+    </div>
 
- {/* Bottom indicator */}
- <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-gold to-emerald transition-all duration-500 group-hover:w-full" />
- </button>
- </Reveal>
- );
- })}
- </div>
+    {/* Content */}
+    <div className="flex flex-1 flex-col p-6">
+    <h3 className="font-display text-lg font-bold text-ivory transition-colors group-hover:text-gold">
+    {s.title}
+    </h3>
+    <p className="mt-2 text-sm leading-relaxed text-ivory/60 line-clamp-3">
+    {s.desc}
+    </p>
+    </div>
+
+    {/* Bottom indicator */}
+    <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-gold to-emerald transition-all duration-500 group-hover:w-full" />
+    </button>
+    </Reveal>
+    );
+    })}
+    </div>
+  )}
  </div>
  </section>
  </>
