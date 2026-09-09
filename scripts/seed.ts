@@ -176,7 +176,47 @@ async function main() {
   }
   console.log(`✓ ${partners.length} partners`);
 
-  // 13. Contact info
+  // 13. Services
+  const services = [
+    { title: "Exploration & Recherche", titleEn: "Exploration & Research", icon: "compass", description: "Programmes d'exploration, investigations géologiques et évaluation de gisements avec les meilleures pratiques internationales.", descriptionEn: "Exploration programs, geological investigations and deposit evaluation with the best international practices.", features: "Cartographie géologique détaillée\nForage et échantillonnage de précision\nModélisation 3D des gisements\nÉtudes de faisabilité technique", featuresEn: "Detailed geological mapping\nPrecision drilling and sampling\n3D deposit modeling\nTechnical feasibility studies", image: "https://sfile.chatglm.cn/images-ppt/04df4107776c.jpg", order: 1 },
+    { title: "Ingénierie & Construction", titleEn: "Engineering & Construction", icon: "hard-hat", description: "Conception, dimensionnement et exécution de projets miniers et industriels de A à Z, avec un appui professionnel adapté.", descriptionEn: "Design, sizing and execution of mining and industrial projects end-to-end, with tailored professional support.", features: "Études d'ingénierie préliminaires\nSupervision des travaux de construction\nGestion de projet EPC\nMise en service et optimisation", featuresEn: "Preliminary engineering studies\nConstruction supervision\nEPC project management\nCommissioning and optimization", image: "https://sfile.chatglm.cn/images-ppt/05f6c556a525.jpg", order: 2 },
+    { title: "Exploitation Minière", titleEn: "Mining Operations", icon: "pickaxe", description: "Solutions d'exploitation optimisées, performantes et responsables, adaptées aux besoins de nos partenaires.", descriptionEn: "Optimized, high-performing and responsible mining solutions, tailored to our partners' needs.", features: "Planification de mine à ciel ouvert et souterraine\nOptimisation des opérations de forage et sautage\nGestion des flottes d'équipements\nSuivi de la production en temps réel", featuresEn: "Open-pit and underground mine planning\nDrill and blast optimization\nEquipment fleet management\nReal-time production monitoring", image: "https://sfile.chatglm.cn/images-ppt/4fa7dbc04708.jpg", order: 3 },
+    { title: "Gestion Environnementale", titleEn: "Environmental Management", icon: "leaf", description: "Études d'impact, plans de gestion et surveillance environnementale pour une exploitation durable.", descriptionEn: "Impact studies, management plans and environmental monitoring for sustainable operations.", features: "Études d'impact environnemental et social (EIES)\nGestion de l'eau et des rejets miniers\nPlans de réhabilitation et de fermeture\nSurveillance de la qualité de l'air et de l'eau", featuresEn: "Environmental and Social Impact Assessments (ESIA)\nWater and mine tailings management\nRehabilitation and closure plans\nAir and water quality monitoring", image: "https://sfile.chatglm.cn/images-ppt/6b8a65fdc1e9.jpg", order: 4 },
+    { title: "Santé & Sécurité (SSE)", titleEn: "Health & Safety (SSE)", icon: "shield", description: "Garantir les plus hauts standards en Santé, Sécurité et Environnement conformes aux normes les plus exigeantes.", descriptionEn: "Guaranteeing the highest Health, Safety and Environment standards compliant with the most demanding norms.", features: "Audits de conformité SSE\nÉlaboration de plans de gestion des risques\nFormation aux premiers secours et sauvetage\nEnquêtes sur les incidents et analyses des causes", featuresEn: "SSE compliance audits\nRisk management plan development\nFirst aid and rescue training\nIncident investigation and root cause analysis", image: "https://sfile.chatglm.cn/images-ppt/45e8b6cc5e07.jpg", order: 5 },
+    { title: "Logistique & Maintenance", titleEn: "Logistics & Maintenance", icon: "truck", description: "Optimisation logistique et maintenance industrielle pour des opérations performantes et continues.", descriptionEn: "Logistics optimization and industrial maintenance for efficient and continuous operations.", features: "Gestion de la chaîne d'approvisionnement\nMaintenance prédictive et préventive\nOptimisation des flux de transport\nGestion des stocks de pièces de rechange", featuresEn: "Supply chain management\nPredictive and preventive maintenance\nTransport flow optimization\nSpare parts inventory management", image: "https://sfile.chatglm.cn/images-ppt/4b7f5b68b5f9.png", order: 6 },
+    { title: "Renforcement des Capacités", titleEn: "Capacity Building", icon: "graduation", description: "Formation professionnelle et développement des compétences locales pour soutenir l'emploi national.", descriptionEn: "Professional training and development of local skills to support national employment.", features: "Programmes de formation sur mesure\nTransfert de compétences techniques\nCoaching et mentorat\nÉvaluation des compétences et certifications", featuresEn: "Tailored training programs\nTechnical skills transfer\nCoaching and mentoring\nSkills assessment and certifications", image: "https://sfile.chatglm.cn/images-ppt/db674a66f85b.jpg", order: 7 },
+    { title: "Consultation, Audit et Expertise", titleEn: "Consulting & Expertise", icon: "clipboard", description: "Conseil technique, audit et expertise de haut niveau pour sécuriser et valoriser vos investissements.", descriptionEn: "Technical advice, audit and high-level expertise to secure and valorize your investments.", features: "Due diligence technique et financière\nAudits opérationnels indépendants\nAssistance à la maîtrise d'ouvrage\nConseils en stratégie de développement minier", featuresEn: "Technical and financial due diligence\nIndependent operational audits\nProject management assistance\nMining development strategy consulting", image: "https://sfile.chatglm.cn/images-ppt/a7122f749665.jpg", order: 8 },
+  ];
+  for (const s of services) {
+    await db.service.upsert({ where: { title: s.title }, update: s, create: s });
+  }
+  console.log(`✓ ${services.length} services`);
+
+  // Replace legacy company-name variants in all PostgreSQL text columns.
+  await db.$executeRawUnsafe(`
+    DO $company_name$
+    DECLARE
+      column_record RECORD;
+    BEGIN
+      FOR column_record IN
+        SELECT table_name, column_name
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND data_type IN ('character varying', 'text')
+      LOOP
+        EXECUTE format(
+          'UPDATE %I SET %I = regexp_replace(%I, ''SARL'', ''irex mining'', ''gi'') WHERE %I ILIKE ''%%SARL%%''',
+          column_record.table_name,
+          column_record.column_name,
+          column_record.column_name,
+          column_record.column_name
+        );
+      END LOOP;
+    END $company_name$;
+  `);
+  console.log("✓ Legacy company names normalized");
+
+  // 14. Contact info
   await db.contactInfo.upsert({
     where: { id: "contact-info-single" },
     update: {},
