@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2, Star } from "lucide-react";
+import { toast } from "sonner";
 import { useCrud } from "@/hooks/use-crud";
 import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
 import { useFetch } from "@/hooks/use-fetch";
@@ -228,8 +229,9 @@ export default function AdminProductsPage() {
               <Input
                 type="number"
                 required
-                value={form.price || 0}
-                onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) || 0 })}
+                value={form.price === 0 || form.price === undefined ? "" : form.price}
+                onChange={(e) => setForm({ ...form, price: e.target.value ? parseInt(e.target.value) : 0 })}
+                placeholder="Ex: 50000"
               />
             </Field>
             <Field label="Category" required>
@@ -271,12 +273,44 @@ export default function AdminProductsPage() {
                 onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
               />
             </Field>
-            <Field label="Image URL">
-              <Input
-                value={form.image || ""}
-                onChange={(e) => setForm({ ...form, image: e.target.value || null })}
-                placeholder="https://..."
-              />
+            <Field label="Image">
+              <div className="flex gap-2">
+                <Input
+                  value={form.image || ""}
+                  onChange={(e) => setForm({ ...form, image: e.target.value || null })}
+                  placeholder="https://... ou upload"
+                  className="flex-1"
+                />
+                <input
+                  type="file"
+                  id="image-upload"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    
+                    const toastId = toast.loading("Uploading image...");
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    try {
+                      const res = await fetch("/api/upload", { method: "POST", body: formData });
+                      if (!res.ok) throw new Error("Upload failed");
+                      const { url } = await res.json();
+                      setForm({ ...form, image: url });
+                      toast.success("Image uploaded successfully!", { id: toastId });
+                    } catch (err) {
+                      toast.error("Failed to upload image", { id: toastId });
+                    }
+                  }}
+                />
+                <label
+                  htmlFor="image-upload"
+                  className="flex cursor-pointer items-center justify-center rounded-lg border border-border bg-coal px-4 text-sm font-medium text-ivory transition-colors hover:bg-obsidian hover:text-gold"
+                >
+                  Upload
+                </label>
+              </div>
             </Field>
           </div>
 
