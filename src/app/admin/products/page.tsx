@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2, Star } from "lucide-react";
 import { toast } from "sonner";
 import { useCrud } from "@/hooks/use-crud";
-import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { DeleteConfirmModal, EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
 import { useFetch } from "@/hooks/use-fetch";
 
 interface Product {
@@ -40,6 +40,7 @@ export default function AdminProductsPage() {
   const [editing, setEditing] = useState<Product | null>(null);
   const [search, setSearch] = useState("");
   const [form, setForm] = useState<Partial<Product>>({});
+  const [pendingDelete, setPendingDelete] = useState<Product | null>(null);
 
   const openCreate = () => {
     setEditing(null);
@@ -67,6 +68,12 @@ export default function AdminProductsPage() {
       await create(form);
     }
     setModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    if (!pendingDelete) return;
+    const deleted = await remove(pendingDelete.id);
+    if (deleted) setPendingDelete(null);
   };
 
   const filtered = items.filter(
@@ -162,7 +169,7 @@ export default function AdminProductsPage() {
                           <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => remove(p.id)}
+                          onClick={() => setPendingDelete(p)}
                           className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-ivory hover:border-red-500 hover:text-red-400 transition-colors"
                           aria-label="Delete"
                         >
@@ -177,6 +184,14 @@ export default function AdminProductsPage() {
           </div>
         )}
       </div>
+
+      <DeleteConfirmModal
+        open={pendingDelete !== null}
+        itemName={pendingDelete?.name || "this product"}
+        itemType="product"
+        onClose={() => setPendingDelete(null)}
+        onConfirm={handleDelete}
+      />
 
       {/* Modal */}
       <EntityModal

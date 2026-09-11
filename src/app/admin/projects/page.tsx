@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
-import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { DeleteConfirmModal, EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
 import { Entity, inputValue } from "@/types/entity";
 
 type Item = Entity;
@@ -15,6 +15,7 @@ export default function AdminProjectsPage() {
   const [editing, setEditing] = useState<Item | null>(null);
   const [search, setSearch] = useState("");
   const [form, setForm] = useState<Partial<Item>>({});
+  const [pendingDelete, setPendingDelete] = useState<Item | null>(null);
 
   const openCreate = () => {
     setEditing(null);
@@ -36,6 +37,12 @@ export default function AdminProjectsPage() {
       await create(form);
     }
     setModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    if (!pendingDelete) return;
+    const deleted = await remove(pendingDelete.id);
+    if (deleted) setPendingDelete(null);
   };
 
   const filtered = items.filter(
@@ -78,6 +85,7 @@ export default function AdminProjectsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-obsidian/50">
+                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Image</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Name</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Sector</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Year</th>
@@ -88,6 +96,20 @@ export default function AdminProjectsPage() {
               <tbody>
                 {filtered.map((item) => (
                   <tr key={item.id} className="border-b border-border/50 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-4 py-3">
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name || "Project"}
+                        loading="lazy"
+                        className="h-14 w-20 rounded-lg border border-border object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-20 items-center justify-center rounded-lg border border-border bg-obsidian px-2 text-center text-[10px] text-muted-foreground">
+                        No image
+                      </div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.name || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.sector || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.year || "—"}</td>
@@ -101,7 +123,7 @@ export default function AdminProjectsPage() {
                           <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => remove(item.id)}
+                          onClick={() => setPendingDelete(item)}
                           className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-ivory hover:border-red-500 hover:text-red-400 transition-colors"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -115,6 +137,14 @@ export default function AdminProjectsPage() {
           </div>
         )}
       </div>
+
+      <DeleteConfirmModal
+        open={pendingDelete !== null}
+        itemName={pendingDelete?.name || "this project"}
+        itemType="project"
+        onClose={() => setPendingDelete(null)}
+        onConfirm={handleDelete}
+      />
 
       <EntityModal
         open={modalOpen}

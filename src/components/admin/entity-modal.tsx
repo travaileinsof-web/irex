@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
 import { type ReactNode } from "react";
 
 interface EntityModalProps {
@@ -53,6 +53,102 @@ export function EntityModal({ open, onClose, title, children, size = "lg" }: Ent
             {/* Body */}
             <div className="p-6">
               {children}
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+interface DeleteConfirmModalProps {
+  open: boolean;
+  itemName: string;
+  itemType: string;
+  onClose: () => void;
+  onConfirm: () => void | Promise<void>;
+  title?: string;
+  description?: string;
+  confirmLabel?: string;
+}
+
+export function DeleteConfirmModal({
+  open,
+  itemName,
+  itemType,
+  onClose,
+  onConfirm,
+  title = "Confirm deletion",
+  description = `You are about to permanently delete this ${itemType}.`,
+  confirmLabel = "Delete permanently",
+}: DeleteConfirmModalProps) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[220] flex items-center justify-center bg-obsidian/85 p-4 backdrop-blur-md"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.95, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.95, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-confirmation-title"
+            className="relative w-full max-w-md overflow-hidden rounded-2xl border border-gold/25 bg-gradient-to-br from-coal to-graphite shadow-[0_24px_80px_-24px_rgba(212,165,71,0.35)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="h-1 bg-gradient-to-r from-gold via-copper to-emerald" />
+            <div className="p-7">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-red-400/30 bg-red-400/10">
+                  <AlertTriangle className="h-5 w-5 text-red-300" />
+                </div>
+                <div className="pr-8">
+                  <h2 id="delete-confirmation-title" className="font-display text-xl font-bold text-ivory">
+                    {title}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-ivory/65">
+                    {description}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-ivory/70 transition-colors hover:bg-white/10 hover:text-ivory"
+                  aria-label="Close"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div className="mt-6 rounded-xl border border-gold/15 bg-obsidian/50 px-4 py-3">
+                <p className="truncate text-sm font-medium text-gold" title={itemName}>
+                  {itemName}
+                </p>
+              </div>
+
+              <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="rounded-full border border-border px-5 py-2.5 text-sm font-medium text-ivory transition-colors hover:border-gold/60 hover:text-gold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={onConfirm}
+                  className="rounded-full bg-gradient-to-r from-red-500 to-red-700 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-950/30 transition-all hover:from-red-400 hover:to-red-600"
+                >
+                  {confirmLabel}
+                </button>
+              </div>
             </div>
           </motion.div>
         </motion.div>

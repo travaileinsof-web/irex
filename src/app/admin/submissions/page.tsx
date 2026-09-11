@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Mail, Phone, Building, MessageSquare, Trash2, Loader2, Filter, CheckCircle, Circle, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { DeleteConfirmModal } from "@/components/admin/entity-modal";
 
 interface Submission {
   id: string;
@@ -37,6 +38,7 @@ export default function AdminSubmissionsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
   const [selected, setSelected] = useState<Submission | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<Submission | null>(null);
 
   const fetchItems = async () => {
     setLoading(true);
@@ -76,18 +78,21 @@ export default function AdminSubmissionsPage() {
     }
   };
 
-  const remove = async (id: string) => {
-    if (!confirm("Delete this submission?")) return;
+  const remove = async (submission: Submission) => {
     try {
-      const res = await fetch(`/api/submissions/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/submissions/${submission.id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
-      setItems((items) => items.filter((it) => it.id !== id));
-      if (selected?.id === id) setSelected(null);
+      setItems((items) => items.filter((it) => it.id !== submission.id));
+      if (selected?.id === submission.id) setSelected(null);
+      setPendingDelete(null);
       toast.success("Deleted");
     } catch {
       toast.error("Failed to delete");
     }
   };
+
+  const submissionLabel = (submission: Submission) =>
+    submission.subject || submission.message.slice(0, 80) || submission.name;
 
   const filtered = items.filter((s) => filter === "all" || s.status === filter);
 
@@ -205,7 +210,7 @@ export default function AdminSubmissionsPage() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        remove(sub.id);
+                        setPendingDelete(sub);
                       }}
                       className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-ivory hover:border-red-500 hover:text-red-400 transition-colors"
                       title="Delete"
@@ -219,6 +224,14 @@ export default function AdminSubmissionsPage() {
           })}
         </div>
       )}
+
+      <DeleteConfirmModal
+        open={pendingDelete !== null}
+        itemName={pendingDelete ? submissionLabel(pendingDelete) : "this submission"}
+        itemType="submission"
+        onClose={() => setPendingDelete(null)}
+        onConfirm={() => pendingDelete ? remove(pendingDelete) : undefined}
+      />
 
       {/* Detail modal */}
       {selected && (

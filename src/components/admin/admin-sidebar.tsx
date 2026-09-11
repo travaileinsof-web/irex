@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   LayoutDashboard,
   Package,
@@ -23,6 +24,7 @@ import {
 import { useAdminAuth } from "./admin-auth-provider";
 import { Logo } from "@/components/site/logo";
 import { cn } from "@/lib/utils";
+import { DeleteConfirmModal } from "./entity-modal";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -48,6 +50,7 @@ export function AdminSidebar({ counts }: { counts?: Record<string, number> }) {
   const pathname = usePathname();
   const router = useRouter();
   const { logout } = useAdminAuth();
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -55,7 +58,18 @@ export function AdminSidebar({ counts }: { counts?: Record<string, number> }) {
   };
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-coal">
+    <>
+      <DeleteConfirmModal
+        open={logoutConfirmOpen}
+        itemName="Admin session"
+        itemType="admin session"
+        title="Confirm logout"
+        description="You are about to end your admin session."
+        confirmLabel="Log out"
+        onClose={() => setLogoutConfirmOpen(false)}
+        onConfirm={handleLogout}
+      />
+      <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-coal">
       {/* Logo */}
       <div className="border-b border-border p-6">
         <Link href="/admin" className="inline-block">
@@ -113,13 +127,14 @@ export function AdminSidebar({ counts }: { counts?: Record<string, number> }) {
           View Site
         </Link>
         <button
-          onClick={handleLogout}
+          onClick={() => setLogoutConfirmOpen(true)}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-ivory/70 hover:bg-red-500/10 hover:text-red-400 transition-colors"
         >
           <LogOut className="h-4 w-4" />
           Logout
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

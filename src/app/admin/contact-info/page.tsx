@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Save, Loader2, Plus, Trash2 } from "lucide-react";
-import { Field, Input, Textarea } from "@/components/admin/entity-modal";
+import { DeleteConfirmModal, Field, Input, Textarea } from "@/components/admin/entity-modal";
 import { toast } from "sonner";
 
 interface SocialLink {
@@ -21,12 +21,19 @@ interface ContactInfo {
   mapUrl: string;
 }
 
+type PendingRemoval = {
+  field: "phones" | "emails" | "socials";
+  index: number;
+  label: string;
+};
+
 const PLATFORMS = ["LinkedIn", "Facebook", "Twitter", "Instagram", "YouTube", "WhatsApp"];
 
 export default function AdminContactInfoPage() {
   const [info, setInfo] = useState<ContactInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [pendingRemoval, setPendingRemoval] = useState<PendingRemoval | null>(null);
 
   useEffect(() => {
     fetch(`/api/contact-info?t=${Date.now()}`)
@@ -104,6 +111,16 @@ export default function AdminContactInfoPage() {
     const newArr = info.socials.filter((_, i) => i !== index);
     setInfo({ ...info, socials: newArr });
   };
+
+  const handleConfirmRemoval = () => {
+    if (!pendingRemoval) return;
+    if (pendingRemoval.field === "socials") {
+      removeSocial(pendingRemoval.index);
+    } else {
+      removeArrayItem(pendingRemoval.field, pendingRemoval.index);
+    }
+    setPendingRemoval(null);
+  };
   const addSocial = () => {
     if (!info) return;
     setInfo({ ...info, socials: [...info.socials, { platform: "LinkedIn", url: "" }] });
@@ -119,6 +136,13 @@ export default function AdminContactInfoPage() {
 
   return (
     <div>
+      <DeleteConfirmModal
+        open={pendingRemoval !== null}
+        itemName={pendingRemoval?.label || "this contact detail"}
+        itemType="contact detail"
+        onClose={() => setPendingRemoval(null)}
+        onConfirm={handleConfirmRemoval}
+      />
       <div className="mb-8">
         <h1 className="font-display text-3xl font-bold text-ivory">Contact Information</h1>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -168,7 +192,7 @@ export default function AdminContactInfoPage() {
             {info?.phones.map((phone, i) => (
               <div key={i} className="flex gap-2">
                 <Input value={phone} onChange={(e) => updateArray("phones", i, e.target.value)} placeholder="+224 ..." />
-                <button type="button" onClick={() => removeArrayItem("phones", i)} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
+                <button type="button" onClick={() => setPendingRemoval({ field: "phones", index: i, label: phone || "this phone number" })} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
               </div>
             ))}
             {info?.phones.length === 0 && <p className="text-xs text-muted-foreground">Aucun numéro</p>}
@@ -183,7 +207,7 @@ export default function AdminContactInfoPage() {
             {info?.emails.map((email, i) => (
               <div key={i} className="flex gap-2">
                 <Input type="email" value={email} onChange={(e) => updateArray("emails", i, e.target.value)} placeholder="contact@..." />
-                <button type="button" onClick={() => removeArrayItem("emails", i)} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
+                <button type="button" onClick={() => setPendingRemoval({ field: "emails", index: i, label: email || "this email address" })} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
               </div>
             ))}
             {info?.emails.length === 0 && <p className="text-xs text-muted-foreground">Aucun e-mail</p>}
@@ -209,7 +233,7 @@ export default function AdminContactInfoPage() {
                 <div className="flex-1">
                   <Input value={social.url} onChange={(e) => updateSocial(i, "url", e.target.value)} placeholder="URL (https://...)" />
                 </div>
-                <button type="button" onClick={() => removeSocial(i)} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
+                <button type="button" onClick={() => setPendingRemoval({ field: "socials", index: i, label: social.platform })} className="text-copper hover:text-red-400 p-2"><Trash2 className="h-4 w-4" /></button>
               </div>
             ))}
             {info?.socials.length === 0 && <p className="text-xs text-muted-foreground">Aucun réseau social</p>}

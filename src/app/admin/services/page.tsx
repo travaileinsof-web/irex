@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
-import { EntityModal, Field, Input, Textarea } from "@/components/admin/entity-modal";
+import { DeleteConfirmModal, EntityModal, Field, Input, Textarea } from "@/components/admin/entity-modal";
 
 interface Service {
   id: string;
@@ -25,6 +25,7 @@ export default function AdminServicesPage() {
   const [editing, setEditing] = useState<Service | null>(null);
   const [search, setSearch] = useState("");
   const [form, setForm] = useState<Partial<Service>>({});
+  const [pendingDelete, setPendingDelete] = useState<Service | null>(null);
 
   const openCreate = () => {
     setEditing(null);
@@ -50,6 +51,12 @@ export default function AdminServicesPage() {
       await create(form);
     }
     setModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    if (!pendingDelete) return;
+    const deleted = await remove(pendingDelete.id);
+    if (deleted) setPendingDelete(null);
   };
 
   const filtered = items.filter(
@@ -97,7 +104,7 @@ export default function AdminServicesPage() {
               <thead>
                 <tr className="border-b border-border bg-obsidian/50">
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Title</th>
-                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Icon / Image</th>
+                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Image</th>
                   <th className="px-4 py-3 text-center text-[10px] uppercase tracking-wider text-muted-foreground">Status</th>
                   <th className="px-4 py-3 text-right text-[10px] uppercase tracking-wider text-muted-foreground">Actions</th>
                 </tr>
@@ -109,8 +116,19 @@ export default function AdminServicesPage() {
                       <div className="font-medium text-ivory">{p.title}</div>
                       {p.titleEn && <div className="text-xs text-muted-foreground">{p.titleEn}</div>}
                     </td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground">
-                      {p.icon || p.image ? (p.icon || 'Image set') : '—'}
+                    <td className="px-4 py-3">
+                      {p.image ? (
+                        <img
+                          src={p.image}
+                          alt={p.title}
+                          loading="lazy"
+                          className="h-14 w-20 rounded-lg border border-border object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-14 w-20 items-center justify-center rounded-lg border border-border bg-obsidian px-2 text-center text-[10px] text-muted-foreground">
+                          {p.icon || "No image"}
+                        </div>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <span className={`inline-block h-2 w-2 rounded-full ${p.published ? "bg-emerald-400" : "bg-muted-foreground"}`} />
@@ -125,7 +143,7 @@ export default function AdminServicesPage() {
                           <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => remove(p.id)}
+                          onClick={() => setPendingDelete(p)}
                           className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-ivory hover:border-red-500 hover:text-red-400 transition-colors"
                           aria-label="Delete"
                         >
@@ -140,6 +158,14 @@ export default function AdminServicesPage() {
           </div>
         )}
       </div>
+
+      <DeleteConfirmModal
+        open={pendingDelete !== null}
+        itemName={pendingDelete?.title || "this service"}
+        itemType="service"
+        onClose={() => setPendingDelete(null)}
+        onConfirm={handleDelete}
+      />
 
       {/* Modal */}
       <EntityModal

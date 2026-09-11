@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Plus, Pencil, Trash2, Search, Loader2 } from "lucide-react";
 import { useCrud } from "@/hooks/use-crud";
-import { EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
+import { DeleteConfirmModal, EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
 import { Entity, inputValue } from "@/types/entity";
 
 type Item = Entity;
@@ -15,6 +15,7 @@ export default function AdminEventsPage() {
   const [editing, setEditing] = useState<Item | null>(null);
   const [search, setSearch] = useState("");
   const [form, setForm] = useState<Partial<Item>>({});
+  const [pendingDelete, setPendingDelete] = useState<Item | null>(null);
 
   const openCreate = () => {
     setEditing(null);
@@ -36,6 +37,12 @@ export default function AdminEventsPage() {
       await create(form);
     }
     setModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    if (!pendingDelete) return;
+    const deleted = await remove(pendingDelete.id);
+    if (deleted) setPendingDelete(null);
   };
 
   const filtered = items.filter(
@@ -101,7 +108,7 @@ export default function AdminEventsPage() {
                           <Pencil className="h-3.5 w-3.5" />
                         </button>
                         <button
-                          onClick={() => remove(item.id)}
+                          onClick={() => setPendingDelete(item)}
                           className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-ivory hover:border-red-500 hover:text-red-400 transition-colors"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -115,6 +122,14 @@ export default function AdminEventsPage() {
           </div>
         )}
       </div>
+
+      <DeleteConfirmModal
+        open={pendingDelete !== null}
+        itemName={pendingDelete?.name || "this event"}
+        itemType="event"
+        onClose={() => setPendingDelete(null)}
+        onConfirm={handleDelete}
+      />
 
       <EntityModal
         open={modalOpen}
