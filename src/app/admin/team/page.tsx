@@ -85,6 +85,7 @@ export default function AdminTeamPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-obsidian/50">
+                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Image</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Name</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Role</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Expertise</th>
@@ -94,6 +95,20 @@ export default function AdminTeamPage() {
               <tbody>
                 {filtered.map((item) => (
                   <tr key={item.id} className="border-b border-border/50 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-4 py-3">
+                    {item.photo ? (
+                      <img
+                        src={item.photo}
+                        alt={item.name || "Team member"}
+                        loading="lazy"
+                        className="h-14 w-14 rounded-full border border-border object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-border bg-obsidian text-center text-[10px] text-muted-foreground">
+                        No image
+                      </div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.name || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.role || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.expertise || "—"}</td>

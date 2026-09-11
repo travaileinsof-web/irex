@@ -85,6 +85,7 @@ export default function AdminEventsPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-obsidian/50">
+                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Image</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Name</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Date</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Location</th>
@@ -95,6 +96,20 @@ export default function AdminEventsPage() {
               <tbody>
                 {filtered.map((item) => (
                   <tr key={item.id} className="border-b border-border/50 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-4 py-3">
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name || "Event"}
+                        loading="lazy"
+                        className="h-14 w-20 rounded-lg border border-border object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-20 items-center justify-center rounded-lg border border-border bg-obsidian px-2 text-center text-[10px] text-muted-foreground">
+                        No image
+                      </div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.name || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.date || "—"}</td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.location || "—"}</td>

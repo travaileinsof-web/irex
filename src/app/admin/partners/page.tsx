@@ -85,6 +85,7 @@ export default function AdminPartnersPage() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-obsidian/50">
+                  <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Logo</th>
                   <th className="px-4 py-3 text-left text-[10px] uppercase tracking-wider text-muted-foreground">Name</th>
                   <th className="px-4 py-3 text-right text-[10px] uppercase tracking-wider text-muted-foreground">Actions</th>
                 </tr>
@@ -92,6 +93,22 @@ export default function AdminPartnersPage() {
               <tbody>
                 {filtered.map((item) => (
                   <tr key={item.id} className="border-b border-border/50 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-4 py-3">
+                    {item.logo ? (
+                      <div className="flex h-14 w-20 items-center justify-center rounded-lg border border-border bg-ivory p-2">
+                        <img
+                          src={item.logo}
+                          alt={`${item.name || "Partner"} logo`}
+                          loading="lazy"
+                          className="max-h-full max-w-full object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex h-14 w-20 items-center justify-center rounded-lg border border-border bg-obsidian px-2 text-center text-[10px] text-muted-foreground">
+                        No logo
+                      </div>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-sm text-ivory">{item.name || "—"}</td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
