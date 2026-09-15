@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Search, Loader2, Star } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Loader2, Star, ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { toast } from "sonner";
 import { useCrud } from "@/hooks/use-crud";
 import { DeleteConfirmModal, EntityModal, Field, Input, Textarea, Select } from "@/components/admin/entity-modal";
@@ -39,8 +39,13 @@ export default function AdminProductsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Product | null>(null);
   const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
   const [form, setForm] = useState<Partial<Product>>({});
   const [pendingDelete, setPendingDelete] = useState<Product | null>(null);
+
+  const ITEMS_PER_PAGE = 10;
 
   const openCreate = () => {
     setEditing(null);
@@ -76,9 +81,19 @@ export default function AdminProductsPage() {
     if (deleted) setPendingDelete(null);
   };
 
-  const filtered = items.filter(
-    (p) => !search || p.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const handleSearch = (v: string) => { setSearch(v); setCurrentPage(1); };
+  const handleFilterCategory = (v: string) => { setFilterCategory(v); setCurrentPage(1); };
+  const handleFilterStatus = (v: string) => { setFilterStatus(v); setCurrentPage(1); };
+
+  const filtered = items.filter((p) => {
+    const matchSearch = !search || p.name.toLowerCase().includes(search.toLowerCase()) || (p.nameEn?.toLowerCase() || "").includes(search.toLowerCase());
+    const matchCategory = filterCategory === "all" || p.categoryId === filterCategory;
+    const matchStatus = filterStatus === "all" || (filterStatus === "published" ? p.published : !p.published);
+    return matchSearch && matchCategory && matchStatus;
+  });
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+  const paginatedItems = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   return (
     <div>
@@ -97,16 +112,42 @@ export default function AdminProductsPage() {
         </button>
       </div>
 
-      {/* Search */}
-      <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-lg border border-border bg-coal py-2.5 pl-10 pr-4 text-sm text-ivory placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
-        />
+      {/* Filters & Search */}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            className="w-full rounded-lg border border-border bg-coal py-2.5 pl-10 pr-4 text-sm text-ivory placeholder:text-muted-foreground/50 focus:border-gold focus:outline-none"
+          />
+        </div>
+        <div className="flex gap-4">
+          <div className="relative">
+            <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <select
+              value={filterCategory}
+              onChange={(e) => handleFilterCategory(e.target.value)}
+              className="w-full appearance-none rounded-lg border border-border bg-coal py-2.5 pl-10 pr-10 text-sm text-ivory focus:border-gold focus:outline-none sm:w-[200px]"
+            >
+              <option value="all">All Categories</option>
+              {(categories || []).map(c => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+          <select
+            value={filterStatus}
+            onChange={(e) => handleFilterStatus(e.target.value)}
+            className="w-full appearance-none rounded-lg border border-border bg-coal py-2.5 px-4 text-sm text-ivory focus:border-gold focus:outline-none sm:w-[160px]"
+          >
+            <option value="all">All Status</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
+        </div>
       </div>
 
       {/* Table */}
@@ -130,7 +171,7 @@ export default function AdminProductsPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((p) => (
+                {paginatedItems.map((p) => (
                   <tr key={p.id} className="border-b border-border/50 hover:bg-white/[0.02] transition-colors">
                     <td className="px-4 py-3">
                       {p.image ? (
@@ -184,6 +225,34 @@ export default function AdminProductsPage() {
           </div>
         )}
       </div>
+
+      {/* Pagination Footer */}
+      {!loading && totalPages > 1 && (
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border pt-4 text-sm text-muted-foreground">
+          <div>
+            Showing <span className="font-medium text-ivory">{Math.min(filtered.length, (currentPage - 1) * ITEMS_PER_PAGE + 1)}</span> to <span className="font-medium text-ivory">{Math.min(filtered.length, currentPage * ITEMS_PER_PAGE)}</span> of <span className="font-medium text-ivory">{filtered.length}</span> results
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border hover:bg-white/5 disabled:opacity-50 transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <span className="px-2 font-medium text-ivory">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border hover:bg-white/5 disabled:opacity-50 transition-colors"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
 
       <DeleteConfirmModal
         open={pendingDelete !== null}
