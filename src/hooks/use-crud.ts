@@ -22,7 +22,7 @@ export function useCrud<T extends { id: string }>(endpoint: string) {
   const fetchItems = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      const url = endpoint.includes("?") ? `${endpoint}&t=${Date.now()}` : `${endpoint}?t=${Date.now()}`;
+      const url = endpoint.includes("?") ? `${endpoint}&all=true&t=${Date.now()}` : `${endpoint}?all=true&t=${Date.now()}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch");
       const items = await res.json();

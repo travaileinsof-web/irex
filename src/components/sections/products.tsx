@@ -39,7 +39,7 @@ export function Products({ onSelectProduct }: { onSelectProduct?: (p: ApiProduct
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
 
   const { data: categories, loading: catLoading } = useFetch<ApiCategory[]>("/api/categories");
-  const productsUrl = "/api/products?all=true";
+  const productsUrl = "/api/products";
   const { data: allProducts, loading: prodLoading } = useFetch<ApiProduct[]>(productsUrl);
 
   const products = (allProducts || []).filter(
